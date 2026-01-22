@@ -2,9 +2,9 @@ name: Cold Email Campaign
 
 on:
   schedule:
-    # Run daily at 9 AM UTC (adjust for your timezone)
+    # Run daily at 9 AM EST (14:00 UTC)
     # Cron: minute hour day-of-month month day-of-week
-    - cron: '0 9 * * *'
+    - cron: '0 14 * * *'
 
   # Allow manual triggers from GitHub Actions UI
   workflow_dispatch:
