@@ -1,5 +1,5 @@
-import { Contact, EmailTask, TrackingRecord, Config } from '../types';
-import { TrackingManager } from '../csv/tracking-manager';
+import { Contact, EmailTask, Config } from '../types';
+import { TrackingManager } from '../db/tracking-manager';
 
 export class CampaignScheduler {
   private config: Config;

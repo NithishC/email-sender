@@ -45,6 +45,10 @@ export function loadConfig(isDryRun: boolean = false): Config {
       refreshToken: getEnvVar('GMAIL_REFRESH_TOKEN', !isDryRun),
       senderEmail: getEnvVar('SENDER_EMAIL', !isDryRun),
     },
+    supabase: {
+      url: getEnvVar('SUPABASE_URL', true),
+      anonKey: getEnvVar('SUPABASE_ANON_KEY', true),
+    },
     campaign: {
       dailyLimit: getEnvNumber('DAILY_LIMIT', 50),
       followUpIntervals: getEnvArray('FOLLOW_UP_INTERVALS', [3, 7]),
@@ -52,8 +56,6 @@ export function loadConfig(isDryRun: boolean = false): Config {
       campaignId: getEnvVar('CAMPAIGN_ID', false) || 'default',
     },
     paths: {
-      contactsCsv: process.env.CONTACTS_CSV || path.join(projectRoot, 'data', 'contacts.csv'),
-      trackingCsv: process.env.TRACKING_CSV || path.join(projectRoot, 'data', 'tracking.csv'),
       templatesDir: process.env.TEMPLATES_DIR || path.join(projectRoot, 'data', 'templates'),
     },
     dryRun: isDryRun,
