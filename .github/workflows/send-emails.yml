@@ -15,7 +15,7 @@ permissions:
 jobs:
   send-emails:
     runs-on: ubuntu-latest
-    environment: production  # Uses secrets from this GitHub environment
+    environment: email-sender  # Uses secrets from this GitHub environment
 
     steps:
       - name: Checkout repository
