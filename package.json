@@ -9,11 +9,17 @@
     "campaign:dry-run": "ts-node src/index.ts --dry-run",
     "auth-setup": "ts-node scripts/auth-setup.ts"
   },
-  "keywords": ["email", "campaign", "gmail", "automation"],
+  "keywords": [
+    "email",
+    "campaign",
+    "gmail",
+    "automation"
+  ],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
+    "@supabase/supabase-js": "^2.91.0",
     "csv-parse": "^6.1.0",
     "csv-stringify": "^6.6.0",
     "dotenv": "^17.2.3",

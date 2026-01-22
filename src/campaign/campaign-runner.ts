@@ -1,7 +1,7 @@
 import { Config, RunResult, TrackingStatus } from '../types';
 import { loadConfig } from '../config';
-import { parseContacts } from '../csv/contact-parser';
-import { TrackingManager } from '../csv/tracking-manager';
+import { getContacts } from '../db/contacts';
+import { TrackingManager } from '../db/tracking-manager';
 import { GmailAuthClient } from '../auth/gmail-auth';
 import { GmailSender } from '../email/gmail-sender';
 import { TemplateEngine } from '../email/template-engine';
@@ -29,13 +29,13 @@ export class CampaignRunner {
     console.log(`Follow-up Intervals: ${this.config.campaign.followUpIntervals.join(', ')} days`);
     console.log('');
 
-    // 1. Load contacts
-    console.log('Loading contacts...');
-    const contacts = await parseContacts(this.config.paths.contactsCsv);
+    // 1. Load contacts from Supabase
+    console.log('Loading contacts from Supabase...');
+    const contacts = await getContacts();
 
-    // 2. Load tracking
-    console.log('Loading tracking data...');
-    const trackingManager = new TrackingManager(this.config.paths.trackingCsv);
+    // 2. Load tracking from Supabase
+    console.log('Loading tracking data from Supabase...');
+    const trackingManager = new TrackingManager();
     await trackingManager.load();
 
     // 3. Load templates
@@ -85,7 +85,7 @@ export class CampaignRunner {
       // Ensure tracking record exists
       let record = task.record;
       if (!record) {
-        record = trackingManager.createRecord(
+        record = await trackingManager.createRecord(
           task.contact.email,
           task.contact.name,
           task.contact.company || '',
@@ -105,7 +105,7 @@ export class CampaignRunner {
           ? 'completed'
           : 'sent';
 
-        trackingManager.updateRecord(task.contact.email, {
+        await trackingManager.updateRecord(task.contact.email, {
           status,
           initial_sent_date: record.initial_sent_date || new Date().toISOString(),
           last_sent_date: new Date().toISOString(),
@@ -133,7 +133,7 @@ export class CampaignRunner {
             ? 'completed'
             : 'sent';
 
-          trackingManager.updateRecord(task.contact.email, {
+          await trackingManager.updateRecord(task.contact.email, {
             status,
             initial_sent_date: record.initial_sent_date || new Date().toISOString(),
             last_sent_date: new Date().toISOString(),
@@ -148,7 +148,7 @@ export class CampaignRunner {
           result.sent++;
           console.log(`         ✓ Sent (ID: ${sendResult.messageId})`);
         } else {
-          trackingManager.updateRecord(task.contact.email, {
+          await trackingManager.updateRecord(task.contact.email, {
             status: 'error',
             error_message: sendResult.error || 'Unknown error',
           });

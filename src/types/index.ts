@@ -78,6 +78,10 @@ export interface Config {
     refreshToken: string;
     senderEmail: string;
   };
+  supabase: {
+    url: string;
+    anonKey: string;
+  };
   campaign: {
     dailyLimit: number;
     followUpIntervals: number[];
@@ -85,8 +89,6 @@ export interface Config {
     campaignId: string;
   };
   paths: {
-    contactsCsv: string;
-    trackingCsv: string;
     templatesDir: string;
   };
   dryRun: boolean;

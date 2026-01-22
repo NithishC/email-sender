@@ -27,3 +27,6 @@ npm-debug.log*
 # Temporary files
 *.tmp
 tmpclaude-*
+
+# Data files (now in Supabase)
+data/*.csv
