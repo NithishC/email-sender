@@ -16,11 +16,15 @@ interface SupabaseContact {
 export async function getContacts(): Promise<Contact[]> {
   const supabase = getSupabaseClient();
 
-  const { data, error } = await supabase
+  console.log('Querying contacts table...');
+
+  const { data, error, count } = await supabase
     .from('contacts')
-    .select('*')
+    .select('*', { count: 'exact' })
     .eq('active', true)
     .order('created_at', { ascending: true });
+
+  console.log('Query result - data:', data?.length ?? 0, 'rows, error:', error?.message ?? 'none');
 
   if (error) {
     throw new Error(`Failed to fetch contacts: ${error.message}`);
@@ -28,6 +32,7 @@ export async function getContacts(): Promise<Contact[]> {
 
   if (!data || data.length === 0) {
     console.log('No active contacts found in database');
+    console.log('Tip: If RLS is enabled, ensure a SELECT policy exists for the anon role');
     return [];
   }
 
