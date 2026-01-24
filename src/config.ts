@@ -57,6 +57,7 @@ export function loadConfig(isDryRun: boolean = false): Config {
     },
     paths: {
       templatesDir: process.env.TEMPLATES_DIR || path.join(projectRoot, 'data', 'templates'),
+      promptsDir: process.env.PROMPTS_DIR || path.join(projectRoot, 'data', 'prompts'),
     },
     dryRun: isDryRun,
   };

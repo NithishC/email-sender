@@ -1,25 +1,40 @@
-// Contact from input CSV
+// Contact with generated emails stored directly
 export interface Contact {
-  email: string;
+  email: string;  // PRIMARY KEY
   name: string;
-  company: string;
-  [key: string]: string; // Allow dynamic custom fields
+  title?: string;
+  company_name?: string;
+
+  // Email generation flag
+  is_emails_enriched: boolean;
+
+  // Generated emails
+  initial_email_subject?: string;
+  initial_email?: string;
+  follow_up_1_subject?: string;
+  follow_up_1?: string;
+  follow_up_2_subject?: string;
+  follow_up_2?: string;
+  follow_up_3_subject?: string;
+  follow_up_3?: string;
+
+  // Research summary
+  research_summary?: string;
+
+  // Metadata
+  created_at?: string;
+  updated_at?: string;
 }
 
 // Tracking record for each contact
 export interface TrackingRecord {
-  email: string;
-  name: string;
-  company: string;
+  email: string;  // FK to contacts
   campaign_id: string;
   status: TrackingStatus;
   initial_sent_date: string | null;
   last_sent_date: string | null;
   follow_up_count: number;
   next_follow_up_date: string | null;
-  last_template_used: string;
-  last_email_subject: string;
-  last_email_body: string;
   error_message: string | null;
   created_at: string;
   updated_at: string;
@@ -30,29 +45,22 @@ export type TrackingStatus =
   | 'sent'
   | 'follow_up_1'
   | 'follow_up_2'
+  | 'follow_up_3'
   | 'completed'
   | 'error'
   | 'bounced';
 
-// Parsed email template
-export interface ParsedTemplate {
-  name: string;
-  subject: string;
-  body: string;
-}
-
-// Rendered email ready to send
-export interface RenderedEmail {
-  subject: string;
-  body: string;
-}
-
-// Email task to be processed
-export interface EmailTask {
-  type: 'initial' | 'follow_up';
-  contact: Contact;
-  record: TrackingRecord | null;
-  templateName: string;
+// Generated emails from Claude
+export interface GeneratedEmails {
+  research_summary?: string;
+  initial_email_subject: string;
+  initial_email: string;
+  follow_up_1_subject: string;
+  follow_up_1: string;
+  follow_up_2_subject: string;
+  follow_up_2: string;
+  follow_up_3_subject: string;
+  follow_up_3: string;
 }
 
 // Result of sending an email
@@ -68,6 +76,35 @@ export interface RunResult {
   failed: number;
   skipped: number;
   errors: string[];
+}
+
+// Generation result
+export interface GenerationResult {
+  generated: number;
+  failed: number;
+  skipped: number;
+  errors: string[];
+}
+
+// Email task for scheduler
+export interface EmailTask {
+  type: 'initial' | 'follow_up';
+  contact: Contact;
+  record: TrackingRecord | null;
+  templateName: string;
+}
+
+// Parsed template from markdown file
+export interface ParsedTemplate {
+  name: string;
+  subject: string;
+  body: string;
+}
+
+// Rendered email ready to send
+export interface RenderedEmail {
+  subject: string;
+  body: string;
 }
 
 // Application configuration
@@ -90,6 +127,7 @@ export interface Config {
   };
   paths: {
     templatesDir: string;
+    promptsDir: string;
   };
   dryRun: boolean;
 }

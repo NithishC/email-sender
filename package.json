@@ -7,6 +7,9 @@
     "build": "tsc",
     "campaign": "ts-node src/index.ts",
     "campaign:dry-run": "ts-node src/index.ts --dry-run",
+    "generate": "ts-node src/campaign/generation-runner.ts",
+    "send": "ts-node src/campaign/send-runner.ts",
+    "send:dry-run": "ts-node src/campaign/send-runner.ts --dry-run",
     "auth-setup": "ts-node scripts/auth-setup.ts"
   },
   "keywords": [

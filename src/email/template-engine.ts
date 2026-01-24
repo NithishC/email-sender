@@ -56,8 +56,14 @@ export class TemplateEngine {
       throw new Error(`Template not found: ${templateName}`);
     }
 
-    // Create variables object from contact
-    const variables: Record<string, string> = { ...contact };
+    // Create variables object from contact (extract string fields only)
+    const variables: Record<string, string> = {
+      email: contact.email,
+      name: contact.name,
+      title: contact.title || '',
+      company_name: contact.company_name || '',
+      company: contact.company_name || '', // alias for compatibility
+    };
 
     // Replace all {{variable}} placeholders
     let subject = this.replaceVariables(template.subject, variables);

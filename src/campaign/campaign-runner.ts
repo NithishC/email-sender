@@ -87,8 +87,6 @@ export class CampaignRunner {
       if (!record) {
         record = await trackingManager.createRecord(
           task.contact.email,
-          task.contact.name,
-          task.contact.company || '',
           this.config.campaign.campaignId
         );
       }
@@ -111,9 +109,6 @@ export class CampaignRunner {
           last_sent_date: new Date().toISOString(),
           follow_up_count: newFollowUpCount,
           next_follow_up_date: scheduler.calculateNextFollowUpDate(newFollowUpCount),
-          last_template_used: task.templateName,
-          last_email_subject: rendered.subject,
-          last_email_body: rendered.body,
         });
 
         result.sent++;
@@ -139,9 +134,6 @@ export class CampaignRunner {
             last_sent_date: new Date().toISOString(),
             follow_up_count: newFollowUpCount,
             next_follow_up_date: scheduler.calculateNextFollowUpDate(newFollowUpCount),
-            last_template_used: task.templateName,
-            last_email_subject: rendered.subject,
-            last_email_body: rendered.body,
             error_message: null,
           });
 
