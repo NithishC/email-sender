@@ -28,5 +28,9 @@ npm-debug.log*
 *.tmp
 tmpclaude-*
 
+# Claude Code local settings (may contain credentials)
+.claude/settings.local.json
+
 # Data files (now in Supabase)
 data/*.csv
+data/prompts/data.md

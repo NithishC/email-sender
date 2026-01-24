@@ -141,6 +141,14 @@ The workflow:
 3. Runs campaign
 4. Commits tracking.csv updates
 
+## Agent Reference Docs (.claude/agents/)
+
+Detailed documentation for AI agents working on this codebase:
+
+| File | Description |
+|------|-------------|
+| `database.md` | Supabase schema guide - tables, columns, queries, relationships |
+
 ## Gotchas
 
 - **OAuth refresh tokens** expire in 7 days if Google Cloud project is in "Testing" mode. Set to "In Production" for persistent tokens.
