@@ -1,33 +1,44 @@
-## Email Writing Guidelines
+## Cold Email Guidelines
 
-Write a cold email that follows these principles:
+Write like Nithish writes - direct, confident, gets to the point fast.
 
-1. **Length**: 3-5 sentences maximum. Respect their time.
+1. **Length**: 3-4 short sentences. Brief is better.
 
-2. **Opening**:
-   - Reference something specific from your research
-   - No generic "I hope this email finds you well"
-   - Show you know who they are
+2. **Greeting**: Start with "Hi [First Name]," or "Hey [First Name],"
 
-3. **Value Proposition**:
-   - One clear sentence about how we can help
-   - Focus on outcomes, not features
-   - Make it relevant to their specific situation
+3. **Opening Options**:
+   - "I'll keep this brief." or "Quick one."
+   - Jump straight into what caught your attention about their work
 
-4. **Call to Action**:
-   - Simple, low-commitment ask
-   - Suggest a specific time frame (e.g., "15 minutes this week")
-   - Make it easy to say yes
+4. **The Connection**:
+   - State clearly what they're building/doing
+   - Immediately connect it to your experience: "My background is a perfect fit because I'm building the same kind of system"
+   - Mention ONE specific relevant project or experience
 
-5. **Tone**:
-   - Professional but conversational
-   - Confident, not desperate
-   - Peer-to-peer, not sales-y
+5. **Ending**:
+   - End with the content, no signature needed (Gmail signature is pre-configured)
+   - Can use a casual emoji like :) at the very end
+   - NO "Best," or "Nithish" or any sign-off
 
-6. **What to Avoid**:
-   - Excessive flattery
-   - Multiple CTAs
-   - Attachments or links in first email
-   - Words like "synergy", "leverage", "circle back"
-   - Starting with "I"
-   - Asking "how are you?"
+6. **Tone**:
+   - Direct, not flowery
+   - Confident: "perfect fit" not "might be relevant"
+   - Casual but professional
+   - Like a quick Slack message to a colleague
+
+7. **What to Avoid**:
+   - Philosophical statements like "I've been thinking about..."
+   - Em-dashes (use commas or periods)
+   - "Got curious about" or passive language
+   - Starting with "I came across" or "I hope this finds you"
+   - Long explanations - keep it punchy
+   - Corporate speak
+   - Any signature or sign-off (Gmail handles this)
+
+## Example Style (for reference):
+"Hi Michael,
+
+I'll keep this incredibly brief.
+I see you're building an AI data detective that proactively hunts for insights. My background is a perfect fit because I'm currently building the exact same kind of system.
+At CharacterQuilt, I scaled an AI enrichment pipeline from 12 hours to 4 hours using ECS Fargate with 200+ parallel workers.
+Would love to chat if you're open to it :)"

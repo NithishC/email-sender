@@ -1,22 +1,31 @@
 ## Follow-up Email Guidelines
 
-1. **Don't Re-pitch**: They saw the first email. Add new value instead.
+Same direct style as initial. Keep it brief. Always start with "Hi [First Name],"
 
-2. **Options for Follow-ups**:
-   - Share a relevant insight or observation
-   - Reference new company news you found
-   - Offer a different angle on the value prop
-   - Ask a question that prompts engagement
+1. **Follow-up 1** (3 days later):
+   - Quick bump, add one new angle
+   - Reference something new about their company/work
+   - Still casual and direct
 
-3. **Keep it Shorter**: 2-3 sentences max for follow-ups.
+2. **Follow-up 2** (7 days later):
+   - Even shorter
+   - Offer something specific: "Happy to share how I approached X if useful"
+   - Can mention being open to chat
 
-4. **Acknowledge the Follow-up**: "Circling back" or "Wanted to follow up" is fine - be human about it.
+3. **Follow-up 3** (14 days later):
+   - Final, graceful close
+   - 1-2 sentences max
+   - "No worries if timing isn't right" vibe
+   - Leave door open
 
-5. **Final Follow-up** (if #2 or later):
-   - Acknowledge it gracefully
-   - Leave the door open
-   - Don't guilt trip
+4. **Tone Throughout**:
+   - Same confident, direct style
+   - Never desperate or apologetic
+   - Each email should stand on its own
 
-6. **Subject Line**:
-   - Can use "Re:" to thread with original
-   - Or create a fresh angle with new subject
+5. **What to Avoid**:
+   - Em-dashes
+   - "Just wanted to follow up" as the whole message
+   - Guilt trips
+   - Getting more formal/desperate as follow-ups go on
+   - Any signature or sign-off (Gmail handles this)

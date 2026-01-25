@@ -34,3 +34,4 @@ tmpclaude-*
 # Data files (now in Supabase)
 data/*.csv
 data/prompts/data.md
+temp/
