@@ -4,9 +4,11 @@ import { Contact } from '../types';
 
 export interface SenderInfo {
   name: string;
-  company: string;
-  role: string;
-  valueProposition: string;
+  email: string;
+  linkedin: string;
+  github: string;
+  currentRole: string;
+  background: string;
 }
 
 export class PromptBuilder {
@@ -25,31 +27,35 @@ export class PromptBuilder {
     const followupGuidelines = this.loadPromptTemplate('followup.md');
 
     return `
-# Task: Generate a complete cold email sequence (4 emails)
+# Task: Generate a cold email sequence to connect with someone whose work interests me (4 emails)
 
-## Contact Information
+The goal is to start a genuine conversation, NOT to ask for a job. I want to connect with people doing interesting work in tech/AI.
+
+## About Me
+- Name: ${this.senderInfo.name}
+- Current Role: ${this.senderInfo.currentRole}
+- LinkedIn: ${this.senderInfo.linkedin}
+- GitHub: ${this.senderInfo.github}
+
+### My Background (pick ONE relevant thing to mention, don't list everything):
+${this.senderInfo.background}
+
+## Target Contact
 - Name: ${contact.name}
-- Email: ${contact.email}
 ${contact.company_name ? `- Company: ${contact.company_name}` : ''}
 ${contact.title ? `- Title: ${contact.title}` : ''}
-
-## Sender Information
-- Name: ${this.senderInfo.name}
-- Company: ${this.senderInfo.company}
-- Role: ${this.senderInfo.role}
-- Value Proposition: ${this.senderInfo.valueProposition}
 
 ## Step 1: Research the Contact and Company
 
 ${researchGuidelines}
 
 Use web search to find:
-1. Recent news about ${contact.company_name || 'their company'} (funding, product launches, hiring)
-2. The contact's recent posts, talks, or articles
-3. Company challenges and opportunities
-4. Any connection points between our companies
+1. What ${contact.company_name || 'their company'} builds and why it's interesting
+2. Recent news, product launches, or tech they use
+3. The contact's role and anything they've written/spoken about
+4. Something genuinely interesting I could ask about or discuss
 
-Summarize your research findings in 2-3 bullet points.
+Summarize research in 2-3 bullet points. Focus on what makes their work interesting, not on job angles.
 
 ## Step 2: Write the Initial Email
 
@@ -65,9 +71,21 @@ Follow-up timing context:
 - Follow-up 3: Sent 14 days after initial (final attempt)
 
 Each follow-up should:
-- Add new value or angle
+- Add new value or a different angle
 - Be progressively shorter
 - Follow-up 3 should gracefully close the loop
+
+## Important Style Notes - THIS IS CRITICAL
+- Write like a quick Slack message, NOT a formal email
+- NEVER use em-dashes (—). Use commas or periods instead.
+- Be direct: "I'll keep this brief" not "I hope this email finds you well"
+- Be confident: "My background is a perfect fit" not "I think I might be relevant"
+- Can use casual emoji like :) at the end
+- NO signature or sign-off at all (Gmail signature is pre-configured and will be added automatically)
+- NO "Best," "Nithish," "Thanks," etc. - just end with the content
+- NO buzzwords like "synergy," "leverage," or "cutting-edge"
+- NO philosophical statements like "I've been thinking about..."
+- NO passive language like "got curious about" or "came across"
 
 ## Output Format
 
@@ -110,22 +128,20 @@ Provide your response in EXACTLY this format:
   private getDefaultTemplate(filename: string): string {
     switch (filename) {
       case 'research-guidelines.md':
-        return `Focus on finding 1-2 specific, recent talking points that demonstrate genuine research. Avoid generic observations.`;
+        return `Focus on finding 1-2 specific talking points that create a genuine connection.`;
       case 'initial.md':
         return `Write a cold email that is:
-- 3-5 sentences maximum
-- References something specific from your research
-- Has one clear value proposition
-- Ends with a simple, low-commitment call to action
-- Does not start with "I" or "Hope this finds you well"`;
+- 4-6 sentences maximum
+- References something specific about their work
+- Includes one relevant accomplishment
+- Asks about opportunities in a low-pressure way`;
       case 'followup.md':
         return `Write follow-up emails that:
-- Don't re-pitch, add new value instead
+- Add new value, don't repeat
 - Are 2-3 sentences max
-- Acknowledge they're follow-ups naturally`;
+- Stay confident, not desperate`;
       default:
         return '';
     }
   }
-
 }

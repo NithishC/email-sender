@@ -137,19 +137,26 @@ export async function main(): Promise<void> {
   const config = loadConfig(true); // dry-run mode for generation (no Gmail needed)
   const projectRoot = process.cwd();
 
-  // Get sender info from environment
+  // Nithish's background for job seeking emails
   const senderInfo: SenderInfo = {
-    name: process.env.SENDER_NAME || 'Your Name',
-    company: process.env.SENDER_COMPANY || 'Your Company',
-    role: process.env.SENDER_ROLE || 'Founder',
-    valueProposition: process.env.VALUE_PROPOSITION || 'We help companies succeed',
+    name: 'SENDER_NAME',
+    email: 'SENDER_EMAIL',
+    linkedin: 'SENDER_LINKEDIN',
+    github: 'SENDER_GITHUB',
+    currentRole: 'SENDER_ROLE',
+    background: `
+- Currently building AI systems at YourCompany: scaled enrichment pipelines from 12-14 hours to 4-5 hours using ECS Fargate + SQS + Lambda with 200+ parallel executors
+- Shipped end-to-end AI agentic systems orchestrating multiple LLMs (Claude, GPT-5, O3 Deep Research) with RAG pipelines and robust agent patterns (tooling, retries, circuit breakers)
+- Built AI-powered Business Intelligence systems for meeting analysis and campaign document automation (90% faster)
+- Previous: Software Engineer at PreviousCompany - led React modernization (50% faster load times), built Flask microservices supporting $4M in loan originations
+- MS in Software Engineering from Northeastern University (GPA 3.7)
+- Tech stack: Python, TypeScript, React, Node.js, AWS (ECS, Lambda, SQS), PostgreSQL, Redis, LangChain, RAG systems
+    `.trim(),
   };
 
   console.log('Sender Info:');
   console.log(`  Name: ${senderInfo.name}`);
-  console.log(`  Company: ${senderInfo.company}`);
-  console.log(`  Role: ${senderInfo.role}`);
-  console.log(`  Value Prop: ${senderInfo.valueProposition}`);
+  console.log(`  Current Role: ${senderInfo.currentRole}`);
 
   const runner = new GenerationRunner({
     promptsDir: process.env.PROMPTS_DIR || path.join(projectRoot, 'data', 'prompts'),

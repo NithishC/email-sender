@@ -1,20 +1,26 @@
 ## Research Guidelines
 
-When researching the contact and company:
+Research to find genuine connection points, not job openings.
 
-1. **Company Research**
-   - Recent funding announcements or acquisitions
-   - New product launches or features
-   - Press releases or news mentions
-   - Company size and growth trajectory
+1. **What They're Building**
+   - What does their company actually do?
+   - What tech challenges are they likely facing?
+   - Recent product launches or features
+   - Do they use AI, ML, or interesting tech?
 
-2. **Contact Research**
-   - Recent LinkedIn posts or articles
-   - Conference talks or podcast appearances
-   - Professional background and career path
+2. **The Person**
+   - What's their role and what do they work on?
+   - Any public posts, talks, or articles?
+   - What seems to interest them professionally?
 
-3. **Industry Context**
-   - Current challenges in their industry
-   - Recent trends affecting their sector
+3. **Connection Opportunities**
+   - Do they work with tech I find interesting (AI, distributed systems, etc.)?
+   - Are they solving problems similar to what I've worked on?
+   - Is there something about their work I'm genuinely curious about?
 
-Focus on finding 1-2 specific, recent talking points that demonstrate genuine research. Avoid generic observations like "your company is growing" or "you're doing great work."
+4. **Recent News**
+   - Funding, acquisitions, or major announcements
+   - New products or features
+   - Anything that would be relevant to mention
+
+Focus on finding 1-2 things that create a genuine reason to reach out. Not "they might hire me" but "their work is interesting and here's why."
