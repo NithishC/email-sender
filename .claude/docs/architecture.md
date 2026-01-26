@@ -100,22 +100,31 @@ Cold email campaign system with AI-powered email generation and automated sendin
 
 **Command:** `npm run send` (or `npm run send:dry-run`)
 
-**Schedule:** Weekdays at 9 AM CST via GitHub Actions
+**Schedule:** Weekdays at 9:17 AM CST via GitHub Actions
 
 **Flow:**
 ```
-1. Load contacts where is_emails_enriched = true
-2. Load email_tracking for each contact
-3. Determine what to send:
-   - No tracking record → send initial email
+1. Download resume from Google Drive (for attachments)
+2. Load contacts where is_emails_enriched = true
+3. Load email_tracking for each contact
+4. Determine what to send:
+   - No tracking record → send initial email (with P.S. signature + resume)
    - status = 'sent' + next_follow_up_date <= today → send follow_up_1
    - status = 'follow_up_1' + next_follow_up_date <= today → send follow_up_2
    - status = 'follow_up_2' + next_follow_up_date <= today → send follow_up_3
-4. For each email to send:
-   a. Send via Gmail API
-   b. Update email_tracking (status, dates)
-5. Rate limit: 2-3s between emails, max 50/day
+5. For each email to send:
+   a. Build HTML email with appropriate signature
+   b. Attach resume (initial emails only)
+   c. Send via Gmail API
+   d. Add "Cold Mails" label to sent message
+   e. Update email_tracking (status, dates)
+6. Rate limit: 2-3s between emails, max 50/day
 ```
+
+**Email Features:**
+- **Signatures**: Different signatures for initial (with P.S. about Apollo) vs follow-ups
+- **Labels**: All sent emails tagged with "Cold Mails" label in Gmail
+- **Attachments**: Resume attached to initial emails only (downloaded from Google Drive)
 
 **Status Progression:**
 ```
@@ -127,7 +136,7 @@ pending → sent → follow_up_1 → follow_up_2 → follow_up_3 → completed
 |------|---------|
 | `src/campaign/send-runner.ts` | Main orchestration |
 | `src/db/tracking-manager.ts` | Manages email_tracking table |
-| `src/email/gmail-sender.ts` | Sends via Gmail API |
+| `src/email/gmail-sender.ts` | Sends via Gmail API with signatures, labels, attachments |
 | `src/email/rate-limiter.ts` | Enforces daily limits |
 | `src/auth/gmail-auth.ts` | OAuth 2.0 authentication |
 
@@ -141,6 +150,8 @@ pending → sent → follow_up_1 → follow_up_2 → follow_up_3 → completed
 | `scripts/add-contact.ts` | Add single contact | `npx ts-node scripts/add-contact.ts email name title company` |
 | `scripts/reset-contact.ts` | Reset to unenriched | `npx ts-node scripts/reset-contact.ts email` |
 | `scripts/view-emails.ts` | View generated emails | `npx ts-node scripts/view-emails.ts email` |
+| `scripts/add-test-contacts.ts` | Set up test contact | `npx ts-node scripts/add-test-contacts.ts` |
+| `scripts/auth-setup.ts` | Set up Gmail OAuth | `npx ts-node scripts/auth-setup.ts` |
 
 ---
 
@@ -148,11 +159,11 @@ pending → sent → follow_up_1 → follow_up_2 → follow_up_3 → completed
 
 ```
 cold-email-campaign/
-├── .claude/agents/          # AI agent documentation
+├── .claude/docs/            # Project documentation
 │   ├── architecture.md      # This file
 │   └── database.md          # Database schema guide
 ├── .github/workflows/
-│   └── send-emails.yml      # GitHub Actions workflow
+│   └── send-campaign.yml    # GitHub Actions workflow
 ├── data/prompts/            # Email generation prompts
 │   ├── initial.md           # Initial email guidelines
 │   ├── followup.md          # Follow-up guidelines
@@ -194,7 +205,9 @@ cold-email-campaign/
 | `GMAIL_REFRESH_TOKEN` | Send | OAuth refresh token |
 | `SENDER_EMAIL` | Send | Gmail address to send from |
 | `DAILY_LIMIT` | Send | Max emails per run (default: 50) |
-| `FOLLOW_UP_INTERVALS` | Send | Days between follow-ups (default: 3,7,14) |
+| `FOLLOW_UP_INTERVALS` | Send | Days between follow-ups (default: 3,7) |
+| `MAX_FOLLOW_UPS` | Send | Number of follow-ups to send (default: 2) |
+| `RESUME_GDRIVE_ID` | Send | Google Drive file ID for resume attachment |
 | `GENERATION_DAILY_LIMIT` | Generate | Max contacts per run (default: 20) |
 | `CLAUDE_TIMEOUT_MS` | Generate | Claude CLI timeout (default: 120000) |
 
