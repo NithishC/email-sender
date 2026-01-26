@@ -22,7 +22,7 @@ const SIGNATURE_INITIAL = `Best,<br>
 SENDER_NAME<br>
 <a href="SENDER_WEBSITE">Website</a> | <a href="SENDER_LINKEDIN">LinkedIn</a><br>
 <br>
-<span style="color: #666; font-size: 0.9em;">P.S. Just so you know, I found your email through Apollo. I like to be pretty transparent about these things, so no need to worry about any data leaks!</span>`;
+<span style="color: #e67e22; font-size: 0.9em;">P.S. Just so you know, I found your email through Apollo. I like to be pretty transparent about these things, so no need to worry about any data leaks!</span>`;
 
 export class GmailSender {
   private gmail: gmail_v1.Gmail;
