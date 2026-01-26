@@ -65,6 +65,7 @@ export class SendRunner {
       const authClient = new GmailAuthClient(this.config.gmail);
       const gmail = await authClient.getGmailClient();
       sender = new GmailSender(gmail, this.config.gmail.senderEmail);
+      await sender.initialize(); // Fetch signatures and labels
     }
 
     // 5. Initialize rate limiter
@@ -94,11 +95,13 @@ export class SendRunner {
         console.log('  [DRY RUN] Would send');
         result.sent++;
       } else {
-        const sendResult = await sender!.sendEmail(
-          email.contact.email,
-          email.subject,
-          email.body
-        );
+        const sendResult = await sender!.sendEmail({
+          to: email.contact.email,
+          subject: email.subject,
+          body: email.body,
+          emailType: email.type,
+          attachResume: email.type === 'initial', // Attach resume only on initial email
+        });
 
         if (sendResult.success) {
           // Calculate new status and follow-up info
