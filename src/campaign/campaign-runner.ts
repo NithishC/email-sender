@@ -3,7 +3,7 @@ import { loadConfig } from '../config';
 import { getContacts } from '../db/contacts';
 import { TrackingManager } from '../db/tracking-manager';
 import { GmailAuthClient } from '../auth/gmail-auth';
-import { GmailSender } from '../email/gmail-sender';
+import { GmailSender, EmailType } from '../email/gmail-sender';
 import { TemplateEngine } from '../email/template-engine';
 import { RateLimiter } from '../email/rate-limiter';
 import { CampaignScheduler } from './scheduler';
@@ -50,6 +50,7 @@ export class CampaignRunner {
       const authClient = new GmailAuthClient(this.config.gmail);
       const gmail = await authClient.getGmailClient();
       sender = new GmailSender(gmail, this.config.gmail.senderEmail);
+      await sender.initialize(); // Fetch signatures and labels
     }
 
     // 5. Get emails to send today
@@ -116,11 +117,18 @@ export class CampaignRunner {
         // Live mode - actually send
         console.log(`  [SEND] ${task.contact.email} - ${task.templateName}`);
 
-        const sendResult = await sender!.sendEmail(
-          task.contact.email,
-          rendered.subject,
-          rendered.body
-        );
+        // Determine email type for signature and attachment logic
+        const emailType: EmailType = task.type === 'initial'
+          ? 'initial'
+          : `follow_up_${record.follow_up_count + 1}` as EmailType;
+
+        const sendResult = await sender!.sendEmail({
+          to: task.contact.email,
+          subject: rendered.subject,
+          body: rendered.body,
+          emailType,
+          attachResume: task.type === 'initial',
+        });
 
         if (sendResult.success) {
           const newFollowUpCount = task.type === 'follow_up' ? record.follow_up_count + 1 : 0;

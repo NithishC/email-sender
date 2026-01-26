@@ -2,7 +2,11 @@ import { google } from 'googleapis';
 import { gmail_v1 } from 'googleapis';
 import { Config } from '../types';
 
-const SCOPES = ['https://www.googleapis.com/auth/gmail.send'];
+const SCOPES = [
+  'https://www.googleapis.com/auth/gmail.send',
+  'https://www.googleapis.com/auth/gmail.settings.basic', // For reading signatures
+  'https://www.googleapis.com/auth/gmail.labels', // For adding labels
+];
 
 export class GmailAuthClient {
   private oauth2Client;
