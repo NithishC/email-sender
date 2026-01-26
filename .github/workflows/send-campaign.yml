@@ -26,6 +26,12 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Download resume from Google Drive
+        run: |
+          mkdir -p temp
+          curl -L "https://drive.google.com/uc?export=download&id=${{ secrets.RESUME_GDRIVE_ID }}" -o temp/Resume.pdf
+          echo "Resume downloaded: $(ls -la temp/Resume.pdf)"
+
       - name: Send approved emails
         env:
           GMAIL_CLIENT_ID: ${{ secrets.GMAIL_CLIENT_ID }}
