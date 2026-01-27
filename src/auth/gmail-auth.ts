@@ -4,8 +4,7 @@ import { Config } from '../types';
 
 const SCOPES = [
   'https://www.googleapis.com/auth/gmail.send',
-  'https://www.googleapis.com/auth/gmail.settings.basic', // For reading signatures
-  'https://www.googleapis.com/auth/gmail.labels', // For adding labels
+  'https://www.googleapis.com/auth/gmail.modify', // For adding labels to messages
 ];
 
 export class GmailAuthClient {
