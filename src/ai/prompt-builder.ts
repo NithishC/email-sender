@@ -53,9 +53,15 @@ Use web search to find:
 1. What ${contact.company_name || 'their company'} builds and why it's interesting
 2. Recent news, product launches, or tech they use
 3. The contact's role and anything they've written/spoken about
-4. Something genuinely interesting I could ask about or discuss
+4. **${contact.name}'s recent LinkedIn posts** (search: "${contact.name} ${contact.company_name} LinkedIn" or "site:linkedin.com ${contact.name}")
+5. **Recent job postings at ${contact.company_name}** (search: "${contact.company_name} software engineer jobs 2026" or "site:linkedin.com/jobs ${contact.company_name}")
+6. Something genuinely interesting I could ask about or discuss
 
-Summarize research in 2-3 bullet points. Focus on what makes their work interesting, not on job angles.
+Summarize research in 4-5 bullet points including:
+- What the company does and recent news
+- Any LinkedIn activity from the contact
+- Any relevant job openings (mention team/role if found)
+- Connection points for the email
 
 ## Step 2: Write the Initial Email
 
