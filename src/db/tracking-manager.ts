@@ -136,7 +136,8 @@ export class TrackingManager {
         record.follow_up_count < maxFollowUps &&
         record.status !== 'error' &&
         record.status !== 'bounced' &&
-        record.status !== 'completed'
+        record.status !== 'completed' &&
+        record.status !== 'replied'
       ) {
         if (record.next_follow_up_date <= todayStr) {
           dueRecords.push(record);

@@ -77,12 +77,15 @@ Tracks status and history of emails sent to each contact.
 - `follow_up_2` - Second follow-up sent
 - `follow_up_3` - Third follow-up sent
 - `completed` - All follow-ups sent
+- `replied` - Contact replied (auto-detected)
 - `error` - Send failed
 - `bounced` - Email bounced
 
 **Status Workflow:**
 ```
 pending → sent → follow_up_1 → follow_up_2 → follow_up_3 → completed
+                     ↓              ↓              ↓
+                  replied       replied        replied    (auto-detected, stops follow-ups)
                                                           ↓
                                                      error/bounced
 ```
@@ -181,4 +184,10 @@ npm run send:dry-run
 
 # Send emails (usually via GitHub Actions)
 npm run send
+
+# Check inbox for replies (marks contacts as 'replied')
+npm run check-replies
+
+# Preview reply detection (dry run)
+npm run check-replies:dry-run
 ```

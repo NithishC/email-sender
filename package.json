@@ -10,6 +10,8 @@
     "generate": "ts-node src/campaign/generation-runner.ts",
     "send": "ts-node src/campaign/send-runner.ts",
     "send:dry-run": "ts-node src/campaign/send-runner.ts --dry-run",
+    "check-replies": "ts-node src/campaign/reply-checker.ts",
+    "check-replies:dry-run": "ts-node src/campaign/reply-checker.ts --dry-run",
     "auth-setup": "ts-node scripts/auth-setup.ts"
   },
   "keywords": [

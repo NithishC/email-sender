@@ -174,8 +174,8 @@ export class SendRunner {
         continue;
       }
 
-      // Skip completed, error, or bounced
-      if (['completed', 'error', 'bounced'].includes(record.status)) {
+      // Skip completed, replied, error, or bounced
+      if (['completed', 'replied', 'error', 'bounced'].includes(record.status)) {
         continue;
       }
 

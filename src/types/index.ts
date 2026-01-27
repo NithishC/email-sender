@@ -47,6 +47,7 @@ export type TrackingStatus =
   | 'follow_up_2'
   | 'follow_up_3'
   | 'completed'
+  | 'replied'
   | 'error'
   | 'bounced';
 

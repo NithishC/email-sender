@@ -57,7 +57,7 @@ Cold email campaign system with AI-powered email generation and automated sendin
 
 ---
 
-## Two Main Workflows
+## Three Main Workflows
 
 ### 1. Generate Emails (Local)
 
@@ -129,6 +129,8 @@ Cold email campaign system with AI-powered email generation and automated sendin
 **Status Progression:**
 ```
 pending → sent → follow_up_1 → follow_up_2 → follow_up_3 → completed
+                     ↓              ↓              ↓
+                  replied       replied        replied    (stops follow-ups)
 ```
 
 **Key Files:**
@@ -139,6 +141,33 @@ pending → sent → follow_up_1 → follow_up_2 → follow_up_3 → completed
 | `src/email/gmail-sender.ts` | Sends via Gmail API with signatures, labels, attachments |
 | `src/email/rate-limiter.ts` | Enforces daily limits |
 | `src/auth/gmail-auth.ts` | OAuth 2.0 authentication |
+
+---
+
+### 3. Check Replies (GitHub Actions)
+
+**Command:** `npm run check-replies` (or `npm run check-replies:dry-run`)
+
+**Schedule:** 3 times daily (8 AM, 1 PM, 6 PM CST) via GitHub Actions
+
+**Purpose:** Automatically detects when contacts reply and stops sending follow-ups.
+
+**Flow:**
+```
+1. Load tracking records with active status (sent, follow_up_1, follow_up_2, follow_up_3)
+2. For each active contact:
+   a. Search Gmail inbox for emails FROM that contact
+   b. Only check emails after initial_sent_date
+3. If reply found:
+   a. Update status to 'replied'
+   b. No more follow-ups will be sent
+```
+
+**Key Files:**
+| File | Purpose |
+|------|---------|
+| `src/campaign/reply-checker.ts` | Scans inbox for replies |
+| `.github/workflows/check-replies.yml` | Scheduled workflow |
 
 ---
 
@@ -163,7 +192,8 @@ cold-email-campaign/
 │   ├── architecture.md      # This file
 │   └── database.md          # Database schema guide
 ├── .github/workflows/
-│   └── send-campaign.yml    # GitHub Actions workflow
+│   ├── send-campaign.yml    # Send emails workflow
+│   └── check-replies.yml    # Check for replies workflow
 ├── data/prompts/            # Email generation prompts
 │   ├── initial.md           # Initial email guidelines
 │   ├── followup.md          # Follow-up guidelines
@@ -178,7 +208,8 @@ cold-email-campaign/
 │   │   └── gmail-auth.ts    # Gmail OAuth
 │   ├── campaign/
 │   │   ├── generation-runner.ts  # npm run generate
-│   │   └── send-runner.ts        # npm run send
+│   │   ├── send-runner.ts        # npm run send
+│   │   └── reply-checker.ts      # npm run check-replies
 │   ├── db/
 │   │   ├── contacts.ts      # Contact queries
 │   │   ├── supabase.ts      # Supabase client

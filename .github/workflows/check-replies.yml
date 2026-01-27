@@ -1,0 +1,38 @@
+name: Check for Replies
+
+on:
+  schedule:
+    # Run 3 times per day: 8 AM, 1 PM, 6 PM CST (14:00, 19:00, 00:00 UTC)
+    - cron: '0 14 * * *'
+    - cron: '0 19 * * *'
+    - cron: '0 0 * * *'
+
+  # Allow manual triggers from GitHub Actions UI
+  workflow_dispatch:
+
+jobs:
+  check-replies:
+    runs-on: ubuntu-latest
+    environment: email-sender
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Check inbox for replies
+        env:
+          GMAIL_CLIENT_ID: ${{ secrets.GMAIL_CLIENT_ID }}
+          GMAIL_CLIENT_SECRET: ${{ secrets.GMAIL_CLIENT_SECRET }}
+          GMAIL_REFRESH_TOKEN: ${{ secrets.GMAIL_REFRESH_TOKEN }}
+          SENDER_EMAIL: ${{ secrets.SENDER_EMAIL }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+        run: npm run check-replies
