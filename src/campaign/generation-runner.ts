@@ -10,21 +10,21 @@ export class GenerationRunner {
   private claudeCli: ClaudeCli;
   private promptBuilder: PromptBuilder;
   private emailParser: EmailParser;
-  private delayMs: number;
   private dailyLimit: number;
+  private concurrency: number;
 
   constructor(options: {
     promptsDir: string;
     senderInfo: SenderInfo;
     timeoutMs?: number;
-    delayMs?: number;
     dailyLimit?: number;
+    concurrency?: number;
   }) {
     this.claudeCli = new ClaudeCli({ timeoutMs: options.timeoutMs || 120000 });
     this.promptBuilder = new PromptBuilder(options.promptsDir, options.senderInfo);
     this.emailParser = new EmailParser();
-    this.delayMs = options.delayMs || 5000;
     this.dailyLimit = options.dailyLimit || 20;
+    this.concurrency = options.concurrency || 5;
   }
 
   async run(): Promise<GenerationResult> {
@@ -37,7 +37,7 @@ export class GenerationRunner {
 
     console.log('\n=== Email Generation (Claude CLI) ===');
     console.log(`Daily Limit: ${this.dailyLimit}`);
-    console.log(`Delay between generations: ${this.delayMs}ms\n`);
+    console.log(`Concurrency: ${this.concurrency} parallel workers\n`);
 
     // 1. Load unenriched contacts
     console.log('Loading unenriched contacts from Supabase...');
@@ -55,31 +55,22 @@ export class GenerationRunner {
       console.log(`Limiting to ${this.dailyLimit} (${contacts.length - this.dailyLimit} deferred)`);
     }
 
-    // 3. Generate emails for each contact
-    for (let i = 0; i < limitedContacts.length; i++) {
-      const contact = limitedContacts[i];
+    // 3. Generate emails for each contact in parallel
+    const parallelResult = await this.processInParallel(
+      limitedContacts,
+      async (contact, index, total) => {
+        console.log(`\n[${index + 1}/${total}] ${contact.email}`);
+        console.log(`  Name: ${contact.name}`);
+        console.log(`  Company: ${contact.company_name || 'N/A'}`);
 
-      console.log(`\n[${i + 1}/${limitedContacts.length}] ${contact.email}`);
-      console.log(`  Name: ${contact.name}`);
-      console.log(`  Company: ${contact.company_name || 'N/A'}`);
-
-      try {
         await this.generateForContact(contact);
-        result.generated++;
-        console.log('  [OK] All 4 emails generated and saved');
-      } catch (error) {
-        result.failed++;
-        const errorMsg = error instanceof Error ? error.message : String(error);
-        result.errors.push(`${contact.email}: ${errorMsg}`);
-        console.error(`  [ERROR] ${errorMsg}`);
+        console.log(`  [OK] All 4 emails generated and saved`);
       }
+    );
 
-      // Rate limit between generations
-      if (i < limitedContacts.length - 1) {
-        console.log(`  Waiting ${this.delayMs}ms...`);
-        await this.sleep(this.delayMs);
-      }
-    }
+    result.generated = parallelResult.success;
+    result.failed = parallelResult.failed;
+    result.errors = parallelResult.errors;
 
     // 4. Summary
     console.log('\n=== Generation Summary ===');
@@ -124,8 +115,34 @@ export class GenerationRunner {
     await updateContactEmails(contact.email, emails);
   }
 
-  private sleep(ms: number): Promise<void> {
-    return new Promise((resolve) => setTimeout(resolve, ms));
+  private async processInParallel(
+    contacts: Contact[],
+    processor: (contact: Contact, index: number, total: number) => Promise<void>
+  ): Promise<{ success: number; failed: number; errors: string[] }> {
+    const result = { success: 0, failed: 0, errors: [] as string[] };
+    let currentIndex = 0;
+    const total = contacts.length;
+
+    const workers = Array(Math.min(this.concurrency, contacts.length))
+      .fill(null)
+      .map(async () => {
+        while (currentIndex < contacts.length) {
+          const index = currentIndex++;
+          const contact = contacts[index];
+          try {
+            await processor(contact, index, total);
+            result.success++;
+          } catch (error) {
+            result.failed++;
+            const errorMsg = error instanceof Error ? error.message : String(error);
+            result.errors.push(`${contact.email}: ${errorMsg}`);
+            console.error(`  [ERROR] ${errorMsg}`);
+          }
+        }
+      });
+
+    await Promise.all(workers);
+    return result;
   }
 }
 
@@ -162,8 +179,8 @@ export async function main(): Promise<void> {
     promptsDir: process.env.PROMPTS_DIR || path.join(projectRoot, 'data', 'prompts'),
     senderInfo,
     timeoutMs: parseInt(process.env.CLAUDE_TIMEOUT_MS || '120000', 10),
-    delayMs: parseInt(process.env.GENERATION_DELAY_MS || '5000', 10),
     dailyLimit: parseInt(process.env.GENERATION_DAILY_LIMIT || '20', 10),
+    concurrency: parseInt(process.env.GENERATION_CONCURRENCY || '5', 10),
   });
 
   try {
