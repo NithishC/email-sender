@@ -112,11 +112,11 @@ Key style points:
 | `GMAIL_REFRESH_TOKEN` | Send | OAuth refresh token |
 | `SENDER_EMAIL` | Send | Gmail address |
 | `DAILY_LIMIT` | Send | Max emails per run (default: 50) |
-| `FOLLOW_UP_INTERVALS` | Send | Days between follow-ups (default: 3,7,14) |
+| `FOLLOW_UP_INTERVALS` | Send | Days between follow-ups (default: 3,7,10) |
 
 ## Gotchas
 
 - **Windows + Claude CLI**: Uses Git Bash for reliable piping
 - **OAuth refresh tokens**: Expire in 7 days if Google Cloud project is in "Testing" mode
 - **Gmail limits**: 500/day for personal accounts - stay well under
-- **Follow-up timing**: Intervals are 3, 7, 14 days from initial send
+- **Follow-up timing**: Intervals are 3, 7, 10 days from initial send

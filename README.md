@@ -46,8 +46,8 @@ GMAIL_CLIENT_SECRET=your-client-secret
 GMAIL_REFRESH_TOKEN=    # Get this in step 4
 SENDER_EMAIL=your-email@gmail.com
 DAILY_LIMIT=50
-FOLLOW_UP_INTERVALS=3,7
-MAX_FOLLOW_UPS=2
+FOLLOW_UP_INTERVALS=3,7,10
+MAX_FOLLOW_UPS=3
 ```
 
 ### 4. Get Refresh Token
@@ -155,8 +155,8 @@ The workflow runs daily at 9 AM UTC. You can also trigger it manually from the A
 | Variable | Default | Description |
 |----------|---------|-------------|
 | `DAILY_LIMIT` | 50 | Max emails per run |
-| `FOLLOW_UP_INTERVALS` | 3,7 | Days after initial email to send follow-ups |
-| `MAX_FOLLOW_UPS` | 2 | Maximum follow-up emails per contact |
+| `FOLLOW_UP_INTERVALS` | 3,7,10 | Days after initial email to send follow-ups |
+| `MAX_FOLLOW_UPS` | 3 | Maximum follow-up emails per contact |
 
 ## Commands
 
