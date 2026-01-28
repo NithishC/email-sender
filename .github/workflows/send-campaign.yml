@@ -40,7 +40,7 @@ jobs:
           SENDER_EMAIL: ${{ secrets.SENDER_EMAIL }}
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
-          DAILY_LIMIT: '50'
-          FOLLOW_UP_INTERVALS: '3,7'
-          MAX_FOLLOW_UPS: '2'
+          DAILY_LIMIT: ${{ secrets.DAILY_LIMIT }}
+          FOLLOW_UP_INTERVALS: '3,7,14'
+          MAX_FOLLOW_UPS: '3'
         run: npm run send
