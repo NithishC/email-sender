@@ -41,6 +41,6 @@ jobs:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
           DAILY_LIMIT: ${{ secrets.DAILY_LIMIT }}
-          FOLLOW_UP_INTERVALS: '3,7,14'
+          FOLLOW_UP_INTERVALS: '3,7,10'
           MAX_FOLLOW_UPS: '3'
         run: npm run send
