@@ -1,44 +1,61 @@
-## Cold Email Guidelines
+## Cold Email Guidelines - Series B+ Engineering Targeting
 
-Write like Nithish writes - direct, confident, gets to the point fast.
+Write for Series B+ companies with specific engineering challenges. Direct, confident, quantified.
 
-1. **Length**: 3-4 short sentences. Brief is better.
+### REQUIRED STRUCTURE (follow exactly):
 
-2. **Greeting**: Start with "Hi [First Name]," or "Hey [First Name],"
+1. **Greeting**: "Hi [First Name],"
 
-3. **Opening Options**:
-   - "I'll keep this brief." or "Quick one."
-   - Jump straight into what caught your attention about their work
+2. **First Line - Role + Initiative** (CRITICAL):
+   Format: "[Their Role], [specific initiative/system they're building]"
+   Examples:
+   - "Senior Platform Engineer, reliability-at-scale"
+   - "Engineering Manager, data platform modernization"
+   - "VP Engineering, cost optimization"
 
-4. **The Connection**:
-   - State clearly what they're building/doing
-   - Immediately connect it to your experience: "My background is a perfect fit because I'm building the same kind of system"
-   - Mention ONE specific relevant project or experience
+3. **Second Line - Surface Area + Proof**:
+   - Reference specific product/engineering area they work on
+   - Include ONE quantified achievement in format: "cut X by Y%" or "migrated N teams"
+   - Connect to B+ company initiatives: reliability, cost optimization, scaling, SOC2, data platform, latency reduction, observability
 
-5. **Ending**:
-   - End with the content, no signature needed (Gmail signature is pre-configured)
-   - Can use a casual emoji like :) at the very end
-   - NO "Best," or "Nithish" or any sign-off
+   Examples:
+   - "I rebuilt observability pipelines at scale, cut costs by 40% while improving query latency."
+   - "I migrated 50+ microservices to Kubernetes, reducing incident response time by 60%."
 
-6. **Tone**:
-   - Direct, not flowery
-   - Confident: "perfect fit" not "might be relevant"
-   - Casual but professional
-   - Like a quick Slack message to a colleague
+4. **Third Line - B+ Initiative Reference**:
+   - Mention specific B+ engineering concern (pick ONE most relevant):
+     * Reliability at scale (uptime, incident response)
+     * Cost optimization (infrastructure, compute, data)
+     * Scaling systems (traffic, data volume, team size)
+     * SOC2/compliance automation
+     * Data platform work (pipelines, warehouses, real-time)
+     * Latency reduction (p99, query performance)
+     * Observability/monitoring at scale
 
-7. **What to Avoid**:
-   - Philosophical statements like "I've been thinking about..."
-   - Em-dashes (use commas or periods)
-   - "Got curious about" or passive language
-   - Starting with "I came across" or "I hope this finds you"
-   - Long explanations - keep it punchy
-   - Corporate speak
-   - Any signature or sign-off (Gmail handles this)
+5. **Fourth Line - Low-Friction Ask**:
+   Use EXACTLY this format: "Worth a 10-min chat to see if I map to your [specific area] needs this quarter?"
+   Examples:
+   - "Worth a 10-min chat to see if I map to your platform needs this quarter?"
+   - "Worth a 10-min chat to see if I map to your infrastructure needs this quarter?"
 
-## Example Style (for reference):
-"Hi Michael,
+### TONE & STYLE:
+- Direct, confident, quantified
+- No fluff: "perfect fit" not "might be relevant"
+- Plain-text deliverability: NO links, minimal formatting
+- Like a focused Slack message to a senior engineer
 
-I'll keep this incredibly brief.
-I see you're building an AI data detective that proactively hunts for insights. My background is a perfect fit because I'm currently building the exact same kind of system.
-At CharacterQuilt, I scaled an AI enrichment pipeline from 12 hours to 4 hours using ECS Fargate with 200+ parallel workers.
-Would love to chat if you're open to it :)"
+### WHAT TO AVOID:
+- Philosophical statements ("I've been thinking about...")
+- Em-dashes (use commas or periods)
+- Passive language ("got curious", "came across")
+- "Hope this finds you well" or similar
+- Any signature or sign-off (Gmail handles this)
+- Links in the first email (deliverability)
+
+### Example (Series B+ Engineering Manager):
+"Hi Sarah,
+
+Engineering Manager, platform reliability.
+I rebuilt observability at scale at my last company, cut incident MTTR by 60% and reduced monitoring costs by 45%.
+I see you're growing the team around real-time data pipelines and SOC2 compliance.
+Worth a 10-min chat to see if I map to your platform needs this quarter?"

@@ -37,8 +37,10 @@ The goal is to start a genuine conversation, NOT to ask for a job. I want to con
 - LinkedIn: ${this.senderInfo.linkedin}
 - GitHub: ${this.senderInfo.github}
 
-### My Background (pick ONE relevant thing to mention, don't list everything):
+### My Background - ONLY USE THESE REAL METRICS (pick ONE most relevant, don't make up anything):
 ${this.senderInfo.background}
+
+**CRITICAL**: Only use achievements and metrics listed above. These are real, verifiable accomplishments. Do NOT invent or exaggerate metrics.
 
 ## Target Contact
 - Name: ${contact.name}
