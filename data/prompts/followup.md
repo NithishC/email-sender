@@ -1,31 +1,54 @@
-## Follow-up Email Guidelines
+## Follow-up Email Guidelines - Series B+ Engineering
 
-Same direct style as initial. Keep it brief. Always start with "Hi [First Name],"
+Same direct, quantified style. Always start with "Hi [First Name],"
 
-1. **Follow-up 1** (3 days later):
-   - Quick bump, add one new angle
-   - Reference something new about their company/work
-   - Still casual and direct
+### Follow-up 1 (3 days later):
+**Structure:**
+- 2-3 sentences max
+- Add ONE new quantified proof point or different angle
+- Reference a different B+ initiative or engineering area
+- Same low-friction ask format
 
-2. **Follow-up 2** (7 days later):
-   - Even shorter
-   - Offer something specific: "Happy to share how I approached X if useful"
-   - Can mention being open to chat
+**Example:**
+"Hi Sarah,
 
-3. **Follow-up 3** (14 days later):
-   - Final, graceful close
-   - 1-2 sentences max
-   - "No worries if timing isn't right" vibe
-   - Leave door open
+Following up on platform reliability.
+I also rebuilt CI/CD pipelines at scale, cut deploy time by 70% and reduced rollback rate by 80%.
+Worth a quick call if you're tackling similar challenges this quarter?"
 
-4. **Tone Throughout**:
-   - Same confident, direct style
-   - Never desperate or apologetic
-   - Each email should stand on its own
+---
 
-5. **What to Avoid**:
-   - Em-dashes
-   - "Just wanted to follow up" as the whole message
-   - Guilt trips
-   - Getting more formal/desperate as follow-ups go on
-   - Any signature or sign-off (Gmail handles this)
+### Follow-up 2 (7 days later):
+**Structure:**
+- Even shorter: 2 sentences
+- Offer specific value: "Happy to share how I approached [specific challenge]"
+- Reference a concrete deliverable or case study
+
+**Example:**
+"Hi Sarah,
+
+Happy to share how I approached incident response automation if that's useful.
+Cut MTTR from 45min to 8min across 200+ services."
+
+---
+
+### Follow-up 3 (10 days later):
+**Structure:**
+- Final, graceful close: 1-2 sentences
+- Acknowledge timing, leave door open
+- No pressure, confident tone
+
+**Example:**
+"Hi Sarah,
+
+No worries if timing isn't right this quarter.
+Happy to reconnect if platform priorities shift."
+
+---
+
+### TONE & RULES:
+- Same confident, quantified style as initial
+- Never desperate or apologetic
+- Each email stands on its own (no "just following up")
+- NO em-dashes, NO links, NO signature
+- Progressive value: each follow-up adds something new
