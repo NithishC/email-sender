@@ -13,6 +13,8 @@ jobs:
   send-emails:
     runs-on: ubuntu-latest
     environment: email-sender  # Uses secrets from this GitHub environment
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
     steps:
       - name: Checkout repository
