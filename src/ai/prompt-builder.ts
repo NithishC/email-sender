@@ -133,6 +133,82 @@ Provide your response in EXACTLY this format:
     return this.getDefaultTemplate(filename);
   }
 
+  // Build prompt to generate LinkedIn connection message + 3 follow-ups
+  buildLinkedInSequencePrompt(contact: Contact): string {
+    const researchGuidelines = this.loadPromptTemplate('research-guidelines.md');
+    const connectionGuidelines = this.loadPromptTemplate('linkedin-connection.md');
+    const followupGuidelines = this.loadPromptTemplate('linkedin-followup.md');
+
+    return `
+# Task: Generate LinkedIn connection message and follow-up sequence
+
+The goal is to connect with someone doing interesting work in Series B+ engineering and start a genuine conversation.
+
+## About Me
+- Name: ${this.senderInfo.name}
+- Current Role: ${this.senderInfo.currentRole}
+- LinkedIn: ${this.senderInfo.linkedin}
+- GitHub: ${this.senderInfo.github}
+
+### My Background - ONLY USE THESE REAL METRICS (pick ONE most relevant for connection message):
+${this.senderInfo.background}
+
+**CRITICAL**: Only use achievements and metrics listed above. These are real, verifiable accomplishments. Do NOT invent or exaggerate metrics.
+
+## Target Contact
+- Name: ${contact.name}
+${contact.company_name ? `- Company: ${contact.company_name}` : ''}
+${contact.title ? `- Title: ${contact.title}` : ''}
+
+## Step 1: Research the Contact and Company
+
+${researchGuidelines}
+
+Use web search to find:
+1. What ${contact.company_name || 'their company'} builds and recent B+ engineering challenges
+2. **${contact.name}'s recent LinkedIn posts** (last 7-14 days)
+3. **Recent job postings at ${contact.company_name}** for platform/infrastructure/SRE roles
+4. Their specific initiative or system they're building
+5. Connection points for the message
+
+Summarize research in 4-5 bullet points.
+
+## Step 2: Write Connection Message (MAX 300 CHARACTERS)
+
+${connectionGuidelines}
+
+**CRITICAL**: The connection message MUST be 300 characters or less (including "Hi [Name],").
+
+## Step 3: Write 3 Follow-up Messages (for after connection is accepted)
+
+${followupGuidelines}
+
+Follow-up timing context:
+- Follow-up 1: Sent within 24 hours after they accept
+- Follow-up 2: Sent 3-4 days later if no response
+- Follow-up 3: Sent 7 days later if no response (graceful close)
+
+## Output Format
+
+Provide your response in EXACTLY this format:
+
+## Research Summary
+[Your research summary as bullet points]
+
+## Connection Message
+[LinkedIn connection message - MAX 300 CHARACTERS including "Hi [Name],"]
+
+## Follow-up 1
+[First message after connection - 3-4 sentences]
+
+## Follow-up 2
+[Second follow-up if no response - 2-3 sentences]
+
+## Follow-up 3
+[Final follow-up - 1-2 sentences, graceful close]
+`.trim();
+  }
+
   private getDefaultTemplate(filename: string): string {
     switch (filename) {
       case 'research-guidelines.md':
@@ -148,6 +224,10 @@ Provide your response in EXACTLY this format:
 - Add new value, don't repeat
 - Are 2-3 sentences max
 - Stay confident, not desperate`;
+      case 'linkedin-connection.md':
+        return `Write a LinkedIn connection message under 300 characters that is warm and professional.`;
+      case 'linkedin-followup.md':
+        return `Write follow-ups after connection that add value and stay casual.`;
       default:
         return '';
     }
