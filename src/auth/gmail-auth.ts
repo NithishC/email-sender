@@ -7,6 +7,8 @@ const SCOPES = [
   'https://www.googleapis.com/auth/gmail.modify', // For adding labels to messages
 ];
 
+const REDIRECT_URI = 'http://localhost:3000/oauth2callback';
+
 export class GmailAuthClient {
   private oauth2Client;
   private config: Config['gmail'];
@@ -16,7 +18,7 @@ export class GmailAuthClient {
     this.oauth2Client = new google.auth.OAuth2(
       config.clientId,
       config.clientSecret,
-      'urn:ietf:wg:oauth:2.0:oob'
+      REDIRECT_URI
     );
 
     // Set refresh token
@@ -35,7 +37,7 @@ export class GmailAuthClient {
     const oauth2Client = new google.auth.OAuth2(
       clientId,
       clientSecret,
-      'urn:ietf:wg:oauth:2.0:oob'
+      REDIRECT_URI
     );
 
     return oauth2Client.generateAuthUrl({
@@ -53,7 +55,7 @@ export class GmailAuthClient {
     const oauth2Client = new google.auth.OAuth2(
       clientId,
       clientSecret,
-      'urn:ietf:wg:oauth:2.0:oob'
+      REDIRECT_URI
     );
 
     const { tokens } = await oauth2Client.getToken(code);
