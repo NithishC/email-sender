@@ -66,6 +66,9 @@ npx ts-node scripts/reset-contact.ts email
 
 # View generated emails
 npx ts-node scripts/view-emails.ts email
+
+# Refresh Gmail OAuth token (run every ~7 days, auto-updates GitHub secret)
+npx ts-node scripts/auth-setup.ts
 ```
 
 ## Data Flow
@@ -112,11 +115,12 @@ Key style points:
 | `GMAIL_REFRESH_TOKEN` | Send | OAuth refresh token |
 | `SENDER_EMAIL` | Send | Gmail address |
 | `DAILY_LIMIT` | Send | Max emails per run (default: 50) |
-| `FOLLOW_UP_INTERVALS` | Send | Days between follow-ups (default: 3,7,14) |
+| `FOLLOW_UP_INTERVALS` | Send | Days between follow-ups (default: 3,7,10) |
 
 ## Gotchas
 
 - **Windows + Claude CLI**: Uses Git Bash for reliable piping
-- **OAuth refresh tokens**: Expire in 7 days if Google Cloud project is in "Testing" mode
+- **OAuth refresh tokens**: Expire in 7 days — Google Cloud project must stay in **Testing mode** (Gmail sensitive scopes require full Google verification to work in Production mode, which is overkill for a personal tool). Run `npx ts-node scripts/auth-setup.ts` to refresh; it auto-updates the GitHub `email-sender` environment secret via `gh`.
+- **OAuth flow**: Uses localhost redirect (`http://localhost:3000/oauth2callback`) — OOB flow (`urn:ietf:wg:oauth:2.0:oob`) is fully deprecated by Google since Jan 2023.
 - **Gmail limits**: 500/day for personal accounts - stay well under
-- **Follow-up timing**: Intervals are 3, 7, 14 days from initial send
+- **Follow-up timing**: Intervals are 3, 7, 10 days from initial send

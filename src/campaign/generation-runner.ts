@@ -154,7 +154,7 @@ export async function main(): Promise<void> {
   const config = loadConfig(true); // dry-run mode for generation (no Gmail needed)
   const projectRoot = process.cwd();
 
-  // Nithish's background for job seeking emails
+  // Nithish's background - ALL REAL METRICS from resume
   const senderInfo: SenderInfo = {
     name: 'Nithish Chandrasekaran',
     email: 'nithishchandrasekaran01@gmail.com',
@@ -162,12 +162,25 @@ export async function main(): Promise<void> {
     github: 'github.com/NithishC',
     currentRole: 'AI Software Engineer at CharacterQuilt',
     background: `
-- Currently building AI systems at CharacterQuilt: scaled enrichment pipelines from 12-14 hours to 4-5 hours using ECS Fargate + SQS + Lambda with 200+ parallel executors
-- Shipped end-to-end AI agentic systems orchestrating multiple LLMs (Claude, GPT-5, O3 Deep Research) with RAG pipelines and robust agent patterns (tooling, retries, circuit breakers)
-- Built AI-powered Business Intelligence systems for meeting analysis and campaign document automation (90% faster)
-- Previous: Software Engineer at Applied Data Finance - led React modernization (50% faster load times), built Flask microservices supporting $4M in loan originations
+## Current Role - CharacterQuilt (Aug 2025 - Present)
+- Scaled AI enrichment pipeline from 12-14 hours to 4-5 hours for 1000+ rows using ECS Fargate + SQS + Lambda with 200+ parallel executors
+- Shipped end-to-end AI agentic system in one week, orchestrating multi-LLM (Claude, GPT-5, O3 Deep Research) with RAG pipelines
+- Built robust agent patterns: tooling, retries, timeouts, circuit breakers for production-grade reliability
+- Delivered AI-powered Business Intelligence systems for meeting analysis, campaign document automation (90% faster)
+- Built large-scale pipelines processing thousands of meeting transcripts with LinkedIn and web intelligence
+
+## Previous Role - Applied Data Finance (Jun 2022 - Aug 2023)
+- Led React modernization reducing page load time from 4.2s to 2.1s (50% improvement) and bounce rate by 35%
+- Spearheaded migration of 1000+ lines of code, achieving 40% reduction in infrastructure costs
+- Created Flask microservices supporting $4M in total loan originations, decreasing document processing latency by 68%
+- Implemented Redis caching for credit assessment platform, reducing PostgreSQL load by 42%
+- Designed automated CI/CD pipeline achieving zero-downtime deployments and reducing QA cycles by 75%
+- Optimized Spring Boot APIs, improving transaction latency by 35%
+- Reduced system downtime by 30% through effective incident resolution
+
+## Education & Skills
 - MS in Software Engineering from Northeastern University (GPA 3.7)
-- Tech stack: Python, TypeScript, React, Node.js, AWS (ECS, Lambda, SQS), PostgreSQL, Redis, LangChain, RAG systems
+- Tech stack: Python, TypeScript, React, Node.js, AWS (ECS, Lambda, SQS, S3, RDS), Docker, Kubernetes, PostgreSQL, Redis, MongoDB, LangChain, RAG, OpenAI API
     `.trim(),
   };
 

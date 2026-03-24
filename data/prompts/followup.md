@@ -1,31 +1,60 @@
-## Follow-up Email Guidelines
+## Follow-up Email Guidelines - Escalating Ask
 
-Same direct style as initial. Keep it brief. Always start with "Hi [First Name],"
+Each follow-up escalates the ask. Don't just add more proof points - change the angle.
 
-1. **Follow-up 1** (3 days later):
-   - Quick bump, add one new angle
-   - Reference something new about their company/work
-   - Still casual and direct
+### Follow-up 1 (3 days later):
+**Goal:** Reiterate interest, add urgency or new angle
 
-2. **Follow-up 2** (7 days later):
-   - Even shorter
-   - Offer something specific: "Happy to share how I approached X if useful"
-   - Can mention being open to chat
+**Structure:**
+- 2-3 sentences max
+- Add ONE new proof point or mention specific job posting
+- Direct ask again
 
-3. **Follow-up 3** (14 days later):
-   - Final, graceful close
-   - 1-2 sentences max
-   - "No worries if timing isn't right" vibe
-   - Leave door open
+**Example:**
+"Hi Ian,
 
-4. **Tone Throughout**:
-   - Same confident, direct style
-   - Never desperate or apologetic
-   - Each email should stand on its own
+Following up on AI engineering roles at Poetiq.
+Also worth mentioning: I scaled AI pipelines from 12h to 4h runtime using ECS Fargate with 200+ parallel executors.
+Still interested if you're hiring for the platform team."
 
-5. **What to Avoid**:
-   - Em-dashes
-   - "Just wanted to follow up" as the whole message
-   - Guilt trips
-   - Getting more formal/desperate as follow-ups go on
-   - Any signature or sign-off (Gmail handles this)
+---
+
+### Follow-up 2 (7 days later):
+**Goal:** Ask for referral if not a fit
+
+**Structure:**
+- 2 sentences
+- Acknowledge they might not be the right person
+- Ask who to talk to instead
+
+**Example:**
+"Hi Ian,
+
+If engineering hiring isn't in your wheelhouse, no worries.
+Who on the team should I reach out to about AI/platform roles?"
+
+---
+
+### Follow-up 3 (10 days later):
+**Goal:** Final direct ask with availability
+
+**Structure:**
+- 2 sentences max
+- State availability clearly
+- Leave door open but move on
+
+**Example:**
+"Hi Ian,
+
+Available to start immediately if there's a fit.
+Happy to send over my resume or jump on a quick call whenever works."
+
+---
+
+### TONE & RULES:
+- Each email has a DIFFERENT ask (don't repeat the same question)
+- Follow-up 1: Reiterate interest + new proof
+- Follow-up 2: Ask for referral
+- Follow-up 3: State availability, final ask
+- Never apologize for following up
+- NO em-dashes, NO special characters in subjects, NO links, NO signature

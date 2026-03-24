@@ -236,8 +236,8 @@ cold-email-campaign/
 | `GMAIL_REFRESH_TOKEN` | Send | OAuth refresh token |
 | `SENDER_EMAIL` | Send | Gmail address to send from |
 | `DAILY_LIMIT` | Send | Max emails per run (default: 50) |
-| `FOLLOW_UP_INTERVALS` | Send | Days between follow-ups (default: 3,7) |
-| `MAX_FOLLOW_UPS` | Send | Number of follow-ups to send (default: 2) |
+| `FOLLOW_UP_INTERVALS` | Send | Days between follow-ups (default: 3,7,10) |
+| `MAX_FOLLOW_UPS` | Send | Number of follow-ups to send (default: 3) |
 | `RESUME_GDRIVE_ID` | Send | Google Drive file ID for resume attachment |
 | `GENERATION_DAILY_LIMIT` | Generate | Max contacts per run (default: 20) |
 | `CLAUDE_TIMEOUT_MS` | Generate | Claude CLI timeout (default: 120000) |

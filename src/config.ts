@@ -51,8 +51,8 @@ export function loadConfig(isDryRun: boolean = false): Config {
     },
     campaign: {
       dailyLimit: getEnvNumber('DAILY_LIMIT', 50),
-      followUpIntervals: getEnvArray('FOLLOW_UP_INTERVALS', [3, 7]),
-      maxFollowUps: getEnvNumber('MAX_FOLLOW_UPS', 2),
+      followUpIntervals: getEnvArray('FOLLOW_UP_INTERVALS', [3, 7, 10]),
+      maxFollowUps: getEnvNumber('MAX_FOLLOW_UPS', 3),
       campaignId: getEnvVar('CAMPAIGN_ID', false) || 'default',
     },
     paths: {
