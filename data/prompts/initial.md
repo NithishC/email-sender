@@ -1,61 +1,66 @@
-## Cold Email Guidelines - Series B+ Engineering Targeting
+## Cold Email Guidelines - Direct Opportunity Ask
 
-Write for Series B+ companies with specific engineering challenges. Direct, confident, quantified.
+Be explicit about looking for a role. No dancing around it. Direct, confident, quantified.
 
-### REQUIRED STRUCTURE (follow exactly):
+### REQUIRED STRUCTURE:
 
 1. **Greeting**: "Hi [First Name],"
 
-2. **First Line - Role + Initiative** (CRITICAL):
-   Format: "[Their Role], [specific initiative/system they're building]"
-   Examples:
-   - "Senior Platform Engineer, reliability-at-scale"
-   - "Engineering Manager, data platform modernization"
-   - "VP Engineering, cost optimization"
+2. **Intent + Background** (1 sentence):
+   - State you're looking AND your expertise in one line
+   - Examples:
+     - "Looking for my next AI engineering role, currently building production LLM systems."
+     - "Exploring backend opportunities, background in distributed systems and infrastructure."
 
-3. **Second Line - Surface Area + Proof**:
-   - Reference specific product/engineering area they work on
-   - Include ONE quantified achievement in format: "cut X by Y%" or "migrated N teams"
-   - Connect to B+ company initiatives: reliability, cost optimization, scaling, SOC2, data platform, latency reduction, observability
+3. **Proof Line - Quantified Achievement** (1 sentence):
+   - ONE specific, quantified win that's relevant to their company
+   - Format: "Recently [action] [metric] at [company]"
+   - Examples:
+     - "Recently cut AI pipeline runtime by 60% (12h to 4h) using ECS Fargate at YourCompany."
+     - "Shipped agentic workflows orchestrating Claude, GPT-5, O3 with production-grade reliability."
 
-   Examples:
-   - "I rebuilt observability pipelines at scale, cut costs by 40% while improving query latency."
-   - "I migrated 50+ microservices to Kubernetes, reducing incident response time by 60%."
+4. **Company Hook** (1 sentence):
+   - Reference their specific work/hiring/initiative
+   - Show you researched them
+   - Example: "Saw Poetiq just raised $45M and is building the platform layer for recursive self-improvement."
 
-4. **Third Line - B+ Initiative Reference**:
-   - Mention specific B+ engineering concern (pick ONE most relevant):
-     * Reliability at scale (uptime, incident response)
-     * Cost optimization (infrastructure, compute, data)
-     * Scaling systems (traffic, data volume, team size)
-     * SOC2/compliance automation
-     * Data platform work (pipelines, warehouses, real-time)
-     * Latency reduction (p99, query performance)
-     * Observability/monitoring at scale
-
-5. **Fourth Line - Low-Friction Ask**:
-   Use EXACTLY this format: "Worth a 10-min chat to see if I map to your [specific area] needs this quarter?"
-   Examples:
-   - "Worth a 10-min chat to see if I map to your platform needs this quarter?"
-   - "Worth a 10-min chat to see if I map to your infrastructure needs this quarter?"
+5. **Direct Ask** (1 sentence):
+   - Be explicit: ask about openings, hiring, or the right person to talk to
+   - Examples:
+     - "Are you hiring for AI/platform engineering roles?"
+     - "Any openings on the team building [specific thing]?"
+     - "Who should I talk to about engineering opportunities?"
 
 ### TONE & STYLE:
-- Direct, confident, quantified
-- No fluff: "perfect fit" not "might be relevant"
-- Plain-text deliverability: NO links, minimal formatting
-- Like a focused Slack message to a senior engineer
+- Direct and explicit about intent (looking for a role)
+- Confident, not apologetic
+- Short: 4-5 sentences max
+- Like texting a friend who works there
 
 ### WHAT TO AVOID:
-- Philosophical statements ("I've been thinking about...")
+- Vague asks ("worth a chat?", "would love to connect")
+- Passive language ("came across", "got curious")
 - Em-dashes (use commas or periods)
-- Passive language ("got curious", "came across")
-- "Hope this finds you well" or similar
+- Special characters in subject lines (arrows, bullets, etc.)
 - Any signature or sign-off (Gmail handles this)
-- Links in the first email (deliverability)
+- Links in the first email
 
-### Example (Series B+ Engineering Manager):
+### SUBJECT LINE:
+- Short, direct, specific to their company/role
+- Examples: "AI roles at Poetiq", "Engineering openings?", "Quick question about [Company] hiring"
+
+### Example (Startup Founder):
+"Hi Ian,
+
+Looking for my next AI engineering role, currently building production LLM orchestration systems.
+Recently shipped end-to-end agentic system in one week at YourCompany, orchestrating Claude, GPT-5, O3 with retries, circuit breakers, and stateful execution.
+Saw Poetiq just raised $45M and is hiring for the platform team around multi-step agent interactions.
+Any engineering openings I should apply for?"
+
+### Example (Recruiter):
 "Hi Sarah,
 
-Engineering Manager, platform reliability.
-I rebuilt observability at scale at my last company, cut incident MTTR by 60% and reduced monitoring costs by 45%.
-I see you're growing the team around real-time data pipelines and SOC2 compliance.
-Worth a 10-min chat to see if I map to your platform needs this quarter?"
+Exploring AI engineering opportunities, background in scaling ML systems and building agentic workflows.
+Cut AI pipeline runtime by 60% (12h to 4h) using ECS Fargate and shipped multi-LLM orchestration at YourCompany.
+I see Liberty Mutual is expanding LibertyGPT and hiring GenAI engineers.
+Are there any software engineering roles open on the AI or platform teams?"

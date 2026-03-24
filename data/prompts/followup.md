@@ -1,54 +1,60 @@
-## Follow-up Email Guidelines - Series B+ Engineering
+## Follow-up Email Guidelines - Escalating Ask
 
-Same direct, quantified style. Always start with "Hi [First Name],"
+Each follow-up escalates the ask. Don't just add more proof points - change the angle.
 
 ### Follow-up 1 (3 days later):
+**Goal:** Reiterate interest, add urgency or new angle
+
 **Structure:**
 - 2-3 sentences max
-- Add ONE new quantified proof point or different angle
-- Reference a different B+ initiative or engineering area
-- Same low-friction ask format
+- Add ONE new proof point or mention specific job posting
+- Direct ask again
 
 **Example:**
-"Hi Sarah,
+"Hi Ian,
 
-Following up on platform reliability.
-I also rebuilt CI/CD pipelines at scale, cut deploy time by 70% and reduced rollback rate by 80%.
-Worth a quick call if you're tackling similar challenges this quarter?"
+Following up on AI engineering roles at Poetiq.
+Also worth mentioning: I scaled AI pipelines from 12h to 4h runtime using ECS Fargate with 200+ parallel executors.
+Still interested if you're hiring for the platform team."
 
 ---
 
 ### Follow-up 2 (7 days later):
+**Goal:** Ask for referral if not a fit
+
 **Structure:**
-- Even shorter: 2 sentences
-- Offer specific value: "Happy to share how I approached [specific challenge]"
-- Reference a concrete deliverable or case study
+- 2 sentences
+- Acknowledge they might not be the right person
+- Ask who to talk to instead
 
 **Example:**
-"Hi Sarah,
+"Hi Ian,
 
-Happy to share how I approached incident response automation if that's useful.
-Cut MTTR from 45min to 8min across 200+ services."
+If engineering hiring isn't in your wheelhouse, no worries.
+Who on the team should I reach out to about AI/platform roles?"
 
 ---
 
 ### Follow-up 3 (10 days later):
+**Goal:** Final direct ask with availability
+
 **Structure:**
-- Final, graceful close: 1-2 sentences
-- Acknowledge timing, leave door open
-- No pressure, confident tone
+- 2 sentences max
+- State availability clearly
+- Leave door open but move on
 
 **Example:**
-"Hi Sarah,
+"Hi Ian,
 
-No worries if timing isn't right this quarter.
-Happy to reconnect if platform priorities shift."
+Available to start immediately if there's a fit.
+Happy to send over my resume or jump on a quick call whenever works."
 
 ---
 
 ### TONE & RULES:
-- Same confident, quantified style as initial
-- Never desperate or apologetic
-- Each email stands on its own (no "just following up")
-- NO em-dashes, NO links, NO signature
-- Progressive value: each follow-up adds something new
+- Each email has a DIFFERENT ask (don't repeat the same question)
+- Follow-up 1: Reiterate interest + new proof
+- Follow-up 2: Ask for referral
+- Follow-up 3: State availability, final ask
+- Never apologize for following up
+- NO em-dashes, NO special characters in subjects, NO links, NO signature
