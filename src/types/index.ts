@@ -36,6 +36,8 @@ export interface TrackingRecord {
   follow_up_count: number;
   next_follow_up_date: string | null;
   error_message: string | null;
+  thread_id: string | null;         // Gmail thread ID for threading follow-ups
+  gmail_message_id: string | null;  // RFC 2822 Message-ID for In-Reply-To header
   created_at: string;
   updated_at: string;
 }
@@ -67,6 +69,8 @@ export interface GeneratedEmails {
 export interface SendResult {
   success: boolean;
   messageId?: string;
+  threadId?: string;
+  gmailMessageId?: string; // RFC 2822 Message-ID for In-Reply-To header
   error?: string;
 }
 

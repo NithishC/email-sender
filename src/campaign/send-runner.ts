@@ -95,12 +95,15 @@ export class SendRunner {
         console.log('  [DRY RUN] Would send');
         result.sent++;
       } else {
+        // Pass thread info for follow-ups to chain them into the same conversation
         const sendResult = await sender!.sendEmail({
           to: email.contact.email,
           subject: email.subject,
           body: email.body,
           emailType: email.type,
-          attachResume: email.type === 'initial', // Attach resume only on initial email
+          attachResume: email.type === 'initial',
+          threadId: email.type !== 'initial' ? record.thread_id || undefined : undefined,
+          gmailMessageId: email.type !== 'initial' ? record.gmail_message_id || undefined : undefined,
         });
 
         if (sendResult.success) {
@@ -109,13 +112,17 @@ export class SendRunner {
           const followUpCount = this.getFollowUpCount(email.type);
           const nextFollowUpDate = this.calculateNextFollowUpDate(followUpCount);
 
-          // Update tracking
+          // Update tracking (save thread info from initial email for follow-up threading)
           await trackingManager.updateRecord(email.contact.email, {
             status: newStatus,
             initial_sent_date: record.initial_sent_date || new Date().toISOString(),
             last_sent_date: new Date().toISOString(),
             follow_up_count: followUpCount,
             next_follow_up_date: nextFollowUpDate,
+            ...(email.type === 'initial' ? {
+              thread_id: sendResult.threadId || null,
+              gmail_message_id: sendResult.gmailMessageId || null,
+            } : {}),
           });
 
           result.sent++;

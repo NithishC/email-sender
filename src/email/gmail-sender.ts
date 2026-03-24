@@ -11,6 +11,8 @@ interface SendEmailOptions {
   body: string;
   emailType: EmailType;
   attachResume?: boolean;
+  threadId?: string;        // Gmail thread ID — threads follow-up into same conversation
+  gmailMessageId?: string;  // RFC 2822 Message-ID of previous email for In-Reply-To header
 }
 
 // Hardcoded signatures since Gmail API doesn't support named signatures
@@ -94,7 +96,7 @@ export class GmailSender {
   }
 
   async sendEmail(options: SendEmailOptions): Promise<SendResult> {
-    const { to, subject, body, emailType, attachResume = false } = options;
+    const { to, subject, body, emailType, attachResume = false, threadId, gmailMessageId } = options;
 
     try {
       // Get the appropriate signature based on email type
@@ -108,7 +110,7 @@ export class GmailSender {
       if (attachResume && emailType === 'initial' && fs.existsSync(this.resumePath)) {
         message = await this.createMessageWithAttachment(to, subject, htmlBody);
       } else {
-        message = this.createHtmlMessage(to, subject, htmlBody);
+        message = this.createHtmlMessage(to, subject, htmlBody, gmailMessageId);
       }
 
       // Base64url encode the message
@@ -118,24 +120,34 @@ export class GmailSender {
         .replace(/\//g, '_')
         .replace(/=+$/, '');
 
-      // Send the email
+      // Send the email (include threadId to thread follow-ups into same conversation)
       const result = await this.gmail.users.messages.send({
         userId: 'me',
         requestBody: {
           raw: encodedMessage,
+          ...(threadId ? { threadId } : {}),
         },
       });
 
       const messageId = result.data.id;
+      const sentThreadId = result.data.threadId;
 
       // Add label to the sent message
       if (messageId) {
         await this.addLabelToMessage(messageId, 'Cold Mails');
       }
 
+      // Fetch the RFC 2822 Message-ID for future In-Reply-To headers
+      let rfcMessageId: string | undefined;
+      if (messageId) {
+        rfcMessageId = await this.fetchRfcMessageId(messageId);
+      }
+
       return {
         success: true,
         messageId: messageId || undefined,
+        threadId: sentThreadId || undefined,
+        gmailMessageId: rfcMessageId,
       };
     } catch (error: unknown) {
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
@@ -177,20 +189,38 @@ export class GmailSender {
     return `<div>${htmlBody}</div>`;
   }
 
-  private createHtmlMessage(to: string, subject: string, htmlBody: string): string {
-    const boundary = `boundary_${Date.now()}`;
-
+  private createHtmlMessage(to: string, subject: string, htmlBody: string, inReplyTo?: string): string {
     const lines = [
       `From: ${this.senderEmail}`,
       `To: ${to}`,
       `Subject: ${subject}`,
       'MIME-Version: 1.0',
       `Content-Type: text/html; charset=utf-8`,
-      '',
-      htmlBody,
     ];
 
+    if (inReplyTo) {
+      lines.push(`In-Reply-To: ${inReplyTo}`);
+      lines.push(`References: ${inReplyTo}`);
+    }
+
+    lines.push('', htmlBody);
+
     return lines.join('\r\n');
+  }
+
+  private async fetchRfcMessageId(messageId: string): Promise<string | undefined> {
+    try {
+      const msg = await this.gmail.users.messages.get({
+        userId: 'me',
+        id: messageId,
+        format: 'metadata',
+        metadataHeaders: ['Message-ID'],
+      });
+      const header = msg.data.payload?.headers?.find((h) => h.name === 'Message-ID');
+      return header?.value || undefined;
+    } catch {
+      return undefined;
+    }
   }
 
   private async createMessageWithAttachment(
