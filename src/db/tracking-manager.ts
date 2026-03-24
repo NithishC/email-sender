@@ -10,6 +10,8 @@ interface SupabaseTrackingRecord {
   follow_up_count: number;
   next_follow_up_date: string | null;
   error_message: string | null;
+  thread_id: string | null;
+  gmail_message_id: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -24,6 +26,8 @@ function toTrackingRecord(row: SupabaseTrackingRecord): TrackingRecord {
     follow_up_count: row.follow_up_count,
     next_follow_up_date: row.next_follow_up_date,
     error_message: row.error_message,
+    thread_id: row.thread_id,
+    gmail_message_id: row.gmail_message_id,
     created_at: row.created_at,
     updated_at: row.updated_at,
   };
