@@ -24,9 +24,7 @@ const SIGNATURE_INITIAL = `Best,<br>
 SENDER_NAME<br>
 <a href="SENDER_WEBSITE">Website</a> | <a href="SENDER_LINKEDIN">LinkedIn</a><br>
 <br>
-<span style="color: #e67e22; font-size: 0.9em;">P.S. Just so you know, I found your email through Apollo. I like to be pretty transparent about these things, so no need to worry about any data leaks!</span><br>
-<br>
-<span style="background-color: #ffeb3b; color: #000; font-size: 0.9em; padding: 2px 4px;">P.P.S. Jensen Huang recently said, "If you are not using AI, you are gonna lose your job to someone who uses AI." I'm already using it, are you?</span>`;
+<span style="color: #e67e22; font-size: 0.9em;">P.S. Just so you know, I found your email through Apollo. I like to be pretty transparent about these things, so no need to worry about any data leaks!</span>`;
 
 export class GmailSender {
   private gmail: gmail_v1.Gmail;
