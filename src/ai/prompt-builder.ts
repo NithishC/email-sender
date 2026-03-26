@@ -125,6 +125,104 @@ Provide your response in EXACTLY this format:
 `.trim();
   }
 
+  // Build one prompt for multiple contacts at the same company (research once, write emails for all)
+  buildBatchSequencePrompt(contacts: Contact[]): string {
+    const company = contacts[0].company_name || 'their company';
+    const researchGuidelines = this.loadPromptTemplate('research-guidelines.md');
+    const initialGuidelines = this.loadPromptTemplate('initial.md');
+    const followupGuidelines = this.loadPromptTemplate('followup.md');
+
+    const contactList = contacts
+      .map((c, i) => `  ${i + 1}. ${c.name} — ${c.title || 'N/A'}`)
+      .join('\n');
+
+    const contactSections = contacts
+      .map(
+        (c, i) => `---CONTACT_${i + 1}---
+---INITIAL_SUBJECT---
+[Subject for ${c.name}]
+---INITIAL_BODY---
+[Initial email body for ${c.name}]
+---FOLLOWUP1_SUBJECT---
+[Follow-up 1 subject for ${c.name}]
+---FOLLOWUP1_BODY---
+[Follow-up 1 body for ${c.name}]
+---FOLLOWUP2_SUBJECT---
+[Follow-up 2 subject for ${c.name}]
+---FOLLOWUP2_BODY---
+[Follow-up 2 body for ${c.name}]
+---FOLLOWUP3_SUBJECT---
+[Follow-up 3 subject for ${c.name}]
+---FOLLOWUP3_BODY---
+[Follow-up 3 body for ${c.name}]
+---END_CONTACT_${i + 1}---`
+      )
+      .join('\n\n');
+
+    return `
+# Task: Research ${company}, then write cold emails for ${contacts.length} contacts there
+
+## About Me
+- Name: ${this.senderInfo.name}
+- Current Role: ${this.senderInfo.currentRole}
+- LinkedIn: ${this.senderInfo.linkedin}
+- GitHub: ${this.senderInfo.github}
+
+### My Background - ONLY USE THESE REAL METRICS (pick the most relevant per contact):
+${this.senderInfo.background}
+
+**CRITICAL**: Only use achievements listed above. Do NOT invent or exaggerate metrics.
+
+## Contacts at ${company}
+${contactList}
+
+## Step 1: Research ${company} ONCE (shared for all contacts)
+
+${researchGuidelines}
+
+Use web search to find:
+1. What ${company} builds and why it's interesting
+2. Recent news, product launches, funding, or tech they use
+3. **Recent job postings at ${company}** (search: "${company} software engineer jobs 2026" or "site:linkedin.com/jobs ${company}")
+4. Engineering blog posts, talks, or technical challenges
+5. Key insight or hook you could use across emails
+
+Summarize in 4-5 bullets, then output:
+---RESEARCH---
+[Research summary]
+
+## Step 2: Write Emails for Each Contact
+
+Email guidelines:
+
+### Initial Email:
+${initialGuidelines}
+
+### Follow-ups:
+${followupGuidelines}
+
+Follow-up timing: 3 days / 7 days / 14 days after initial.
+
+## Style Rules (CRITICAL for ALL emails)
+- Write like a quick Slack message, NOT a formal email
+- NEVER use em-dashes (—). Use commas or periods instead.
+- NO markdown bold (**), NO bullet formatting in email bodies
+- NO signature or sign-off (Gmail adds it automatically)
+- NO "Best," "Thanks," "Nithish," — just end with the content
+- NO buzzwords, NO philosophical statements
+- Short: initial = 3-4 sentences, follow-ups = 2-3 sentences
+
+## REQUIRED Output Format
+
+You MUST use EXACTLY these delimiters — no variations, no extra text between blocks.
+
+---RESEARCH---
+[Company research summary - bullet points are fine here]
+
+${contactSections}
+`.trim();
+  }
+
   private loadPromptTemplate(filename: string): string {
     const filePath = path.join(this.promptsDir, filename);
     if (fs.existsSync(filePath)) {

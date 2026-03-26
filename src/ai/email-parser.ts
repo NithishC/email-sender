@@ -114,4 +114,28 @@ export class EmailParser {
       return null;
     }
   }
+
+  // Parse batch output: one research block + N contact blocks
+  parseBatchSequence(output: string, count: number): (GeneratedEmails | null)[] {
+    const normalized = output.replace(/\r\n/g, '\n').trim();
+
+    const researchMatch = normalized.match(/---RESEARCH---\s*([\s\S]*?)\s*---CONTACT_1---/);
+    const research_summary = researchMatch ? researchMatch[1].trim() : undefined;
+
+    return Array.from({ length: count }, (_, i) => {
+      const n = i + 1;
+      const blockMatch = normalized.match(
+        new RegExp(`---CONTACT_${n}---\\s*([\\s\\S]*?)\\s*---END_CONTACT_${n}---`)
+      );
+      if (!blockMatch) {
+        console.error(`Failed to extract contact block ${n}`);
+        return null;
+      }
+      // Reuse single-contact parser by wrapping block in the expected format
+      const block = `---RESEARCH---\n${research_summary || ''}\n${blockMatch[1].trim()}\n---END---`;
+      const result = this.parseFullSequence(block);
+      if (result && research_summary) result.research_summary = research_summary;
+      return result;
+    });
+  }
 }

@@ -15,7 +15,7 @@ export class ClaudeCli {
   private tempDir: string;
 
   constructor(options: { timeoutMs?: number; maxRetries?: number; tempDir?: string } = {}) {
-    this.timeoutMs = options.timeoutMs || 120000; // 2 min default
+    this.timeoutMs = options.timeoutMs || 300000; // 5 min default
     this.maxRetries = options.maxRetries || 2;
     this.tempDir = options.tempDir || path.join(process.cwd(), 'temp');
 
@@ -109,6 +109,7 @@ export class ClaudeCli {
   }
 
   private isRetryableError(error: unknown): boolean {
+    if (error instanceof Error && (error as Error & { killed?: boolean }).killed) return true;
     const message = error instanceof Error ? error.message.toLowerCase() : '';
     return (
       message.includes('timeout') ||

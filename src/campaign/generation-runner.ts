@@ -24,7 +24,7 @@ export class GenerationRunner {
     this.promptBuilder = new PromptBuilder(options.promptsDir, options.senderInfo);
     this.emailParser = new EmailParser();
     this.dailyLimit = options.dailyLimit || 20;
-    this.concurrency = options.concurrency || 5;
+    this.concurrency = options.concurrency || 2;
   }
 
   async run(): Promise<GenerationResult> {
@@ -55,16 +55,24 @@ export class GenerationRunner {
       console.log(`Limiting to ${this.dailyLimit} (${contacts.length - this.dailyLimit} deferred)`);
     }
 
-    // 3. Generate emails for each contact in parallel
-    const parallelResult = await this.processInParallel(
-      limitedContacts,
-      async (contact, index, total) => {
-        console.log(`\n[${index + 1}/${total}] ${contact.email}`);
-        console.log(`  Name: ${contact.name}`);
-        console.log(`  Company: ${contact.company_name || 'N/A'}`);
+    // 3. Group contacts by company for batched generation
+    const groups = this.groupByCompany(limitedContacts);
+    console.log(`Grouped into ${groups.length} company batches\n`);
 
-        await this.generateForContact(contact);
-        console.log(`  [OK] All 4 emails generated and saved`);
+    const parallelResult = await this.processInParallel(
+      groups,
+      async (group, index, total) => {
+        const company = group[0].company_name || 'Unknown';
+        console.log(`\n[Batch ${index + 1}/${total}] ${company} (${group.length} contact${group.length > 1 ? 's' : ''})`);
+        group.forEach(c => console.log(`  - ${c.name} <${c.email}>`));
+
+        if (group.length === 1) {
+          await this.generateForContact(group[0]);
+          console.log(`  [OK] Emails generated for ${group[0].name}`);
+        } else {
+          await this.generateForBatch(group);
+          console.log(`  [OK] Emails generated for all ${group.length} contacts`);
+        }
       }
     );
 
@@ -115,27 +123,65 @@ export class GenerationRunner {
     await updateContactEmails(contact.email, emails);
   }
 
-  private async processInParallel(
-    contacts: Contact[],
-    processor: (contact: Contact, index: number, total: number) => Promise<void>
+  private groupByCompany(contacts: Contact[]): Contact[][] {
+    const map = new Map<string, Contact[]>();
+    for (const contact of contacts) {
+      const key = contact.company_name || contact.email;
+      if (!map.has(key)) map.set(key, []);
+      map.get(key)!.push(contact);
+    }
+    return Array.from(map.values());
+  }
+
+  private async generateForBatch(contacts: Contact[]): Promise<void> {
+    const prompt = this.promptBuilder.buildBatchSequencePrompt(contacts);
+
+    console.log('  Calling Claude CLI with web search...');
+
+    const cliResult = await this.claudeCli.execute(prompt, { allowWebSearch: true });
+
+    if (!cliResult.success) {
+      throw new Error(`Claude CLI: ${cliResult.error}`);
+    }
+
+    console.log(`  Response received (${cliResult.durationMs}ms)`);
+
+    const results = this.emailParser.parseBatchSequence(cliResult.output, contacts.length);
+
+    for (let i = 0; i < contacts.length; i++) {
+      const emails = results[i];
+      if (!emails) {
+        throw new Error(`Failed to parse emails for ${contacts[i].name}`);
+      }
+      console.log(`  Saving emails for ${contacts[i].name}...`);
+      await updateContactEmails(contacts[i].email, emails);
+    }
+  }
+
+  private async processInParallel<T>(
+    items: T[],
+    processor: (item: T, index: number, total: number) => Promise<void>
   ): Promise<{ success: number; failed: number; errors: string[] }> {
     const result = { success: 0, failed: 0, errors: [] as string[] };
     let currentIndex = 0;
-    const total = contacts.length;
+    const total = items.length;
 
-    const workers = Array(Math.min(this.concurrency, contacts.length))
+    const workers = Array(Math.min(this.concurrency, items.length))
       .fill(null)
       .map(async () => {
-        while (currentIndex < contacts.length) {
+        while (currentIndex < items.length) {
           const index = currentIndex++;
-          const contact = contacts[index];
+          const item = items[index];
           try {
-            await processor(contact, index, total);
+            await processor(item, index, total);
             result.success++;
           } catch (error) {
             result.failed++;
             const errorMsg = error instanceof Error ? error.message : String(error);
-            result.errors.push(`${contact.email}: ${errorMsg}`);
+            const label = Array.isArray(item)
+              ? (item as Contact[])[0].company_name || (item as Contact[])[0].email
+              : (item as Contact).email;
+            result.errors.push(`${label}: ${errorMsg}`);
             console.error(`  [ERROR] ${errorMsg}`);
           }
         }
@@ -163,11 +209,16 @@ export async function main(): Promise<void> {
     currentRole: 'SENDER_ROLE',
     background: `
 ## Current Role - YourCompany (Aug 2025 - Present)
-- Scaled AI enrichment pipeline from 12-14 hours to 4-5 hours for 1000+ rows using ECS Fargate + SQS + Lambda with 200+ parallel executors
-- Shipped end-to-end AI agentic system in one week, orchestrating multi-LLM (Claude, GPT-5, O3 Deep Research) with RAG pipelines
-- Built robust agent patterns: tooling, retries, timeouts, circuit breakers for production-grade reliability
-- Delivered AI-powered Business Intelligence systems for meeting analysis, campaign document automation (90% faster)
-- Built large-scale pipelines processing thousands of meeting transcripts with LinkedIn and web intelligence
+- Architected distributed parallel system (ECS Fargate + SQS + Lambda) on Linux serving 20+ B2B clients with 200+ concurrent workers, reducing 
+runtime by 65% (12-14 hrs to 4-5 hrs for 1,000+ prospects)
+- Cut per-job LLM inference cost from $25 to $15-20 per 200-prospect batch by diagnosing a prompt-caching misconfiguration and switching to 
+Claude-as-orchestrator + GPT-mini execution model, maintaining output quality
+- Shipped end-to-end AI agentic system orchestrating multi-LLM pipelines (Claude, GPT-5, O3 Deep Research) with production-grade resilience 
+patterns (tool calling, retries, timeouts, circuit breakers), deployed in one week
+- Developed NLP and RAG pipelines processing thousands of meeting transcripts, recordings and web sources into structured business insights, 
+automating campaign document generation 90% faster for clients
+- Identified API rate-limiting constraints through hands-on load testing, benchmarking tokens per call and requests per minute, then proposed and 
+implemented a retry queue with dead-letter queue (DLQ), enabling failure diagnosis and zero-loss recovery for previously unrecoverable jobs
 
 ## Previous Role - PreviousCompany (Jun 2022 - Aug 2023)
 - Led React modernization reducing page load time from 4.2s to 2.1s (50% improvement) and bounce rate by 35%
@@ -191,9 +242,9 @@ export async function main(): Promise<void> {
   const runner = new GenerationRunner({
     promptsDir: process.env.PROMPTS_DIR || path.join(projectRoot, 'data', 'prompts'),
     senderInfo,
-    timeoutMs: parseInt(process.env.CLAUDE_TIMEOUT_MS || '120000', 10),
+    timeoutMs: parseInt(process.env.CLAUDE_TIMEOUT_MS || '300000', 10),
     dailyLimit: parseInt(process.env.GENERATION_DAILY_LIMIT || '20', 10),
-    concurrency: parseInt(process.env.GENERATION_CONCURRENCY || '5', 10),
+    concurrency: parseInt(process.env.GENERATION_CONCURRENCY || '2', 10),
   });
 
   try {

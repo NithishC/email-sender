@@ -17,11 +17,12 @@ Research to identify B+ engineering initiatives and quantifiable pain points.
    - **Latency reduction**: Query performance, p99 latency, API response times
    - **Observability**: Monitoring, logging, tracing, alerting at scale
 
-### 3. **Recent Job Postings** (IMPORTANT)
-   - Search for job openings at their company posted in the last 7-14 days
-   - Look for: Platform Engineer, Site Reliability Engineer, Infrastructure, Data Engineer
-   - Note specific tech stacks, initiatives mentioned in JDs
-   - Use phrases like "I see you're growing the team around [specific area]"
+### 3. **Recent Job Postings** (CRITICAL - determines email mode)
+   - Search for job openings at their company posted in the last 30 days
+   - Look for: Platform Engineer, Site Reliability Engineer, Infrastructure, Data Engineer, AI/ML Engineer, Backend Engineer
+   - If found: note the exact role title, team, and specific requirements from the JD — the email will reference this directly
+   - If not found: note the absence — the email will use the insight-led approach instead
+   - Search LinkedIn Jobs, Greenhouse, Lever, Ashby, and company careers page
 
 ### 4. **LinkedIn Activity**
    - Search for their recent LinkedIn posts (last 7-14 days)
@@ -40,8 +41,8 @@ Research to identify B+ engineering initiatives and quantifiable pain points.
 
 ### Output Format:
 Summarize in 4-5 bullets:
+- **EMAIL MODE**: MODE A (job posting found: [exact role title]) or MODE B (no posting found)
 - Primary role + initiative they own
 - 1-2 B+ engineering challenges (with evidence)
-- Any relevant job postings (team/role)
 - Tech stack or scale indicators
-- Connection points for the email
+- Key insight or observation to use as the hook (for Mode B)
