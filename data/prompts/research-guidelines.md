@@ -7,17 +7,36 @@ Research to identify B+ engineering initiatives and quantifiable pain points.
    - What initiative/system are they building or responsible for?
    - Look for keywords: platform, infrastructure, data, reliability, observability
 
-### 2. **B+ Company Engineering Challenges** (Pick 1-2 most relevant)
+### 2. **B+ Company Engineering Challenges** (Pick 1-2 most relevant to their role)
    Search for evidence of these specific concerns:
+
+   **Infrastructure / Platform / SRE:**
    - **Reliability at scale**: Uptime, incident response, on-call, SLOs
    - **Cost optimization**: Cloud spend, infrastructure efficiency, compute costs
    - **Scaling systems**: Traffic growth, data volume, team expansion
    - **SOC2/Compliance**: Security certifications, audit readiness, data governance
-   - **Data platform**: Pipelines, warehouses, real-time processing, ETL
    - **Latency reduction**: Query performance, p99 latency, API response times
    - **Observability**: Monitoring, logging, tracing, alerting at scale
 
+   **AI / ML Engineering:**
+   - **LLM / agent pipelines**: Orchestration, multi-model routing, retries, cost control
+   - **RAG / knowledge systems**: Retrieval accuracy, chunking, embedding pipelines
+   - **Model serving**: Inference latency, throughput, batching, GPU cost
+   - **Evals and quality**: Measuring output quality, regression testing for prompts
+   - **Data pipelines for AI**: ETL into vector stores, fine-tuning data prep
+
+   **Fullstack / Product Engineering:**
+   - **Frontend performance**: Load time, Core Web Vitals, bundle size
+   - **API design**: REST/GraphQL, latency, rate limiting
+   - **Data platform**: Pipelines, warehouses, real-time processing
+
 ### 3. **Recent Job Postings** (CRITICAL - determines email mode)
+
+   **First: check the contact's title.**
+   - If the contact is an individual contributor (Engineer, Senior Engineer, AI/ML Engineer, Data Scientist, Researcher, etc.) → **always use MODE B**, regardless of job postings. ICs can't hire you; peer-to-peer is the only angle that works.
+   - If the contact is a hiring decision-maker (Engineering Manager, VP Eng, CTO, Director, Head of, Recruiter, Talent, etc.) → check for job postings to decide Mode A vs B.
+
+   For decision-makers only:
    - Search for job openings at their company posted in the last 30 days
    - Look for: Platform Engineer, Site Reliability Engineer, Infrastructure, Data Engineer, AI/ML Engineer, Backend Engineer
    - If found: note the exact role title, team, and specific requirements from the JD — the email will reference this directly

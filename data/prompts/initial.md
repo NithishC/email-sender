@@ -1,6 +1,8 @@
 ## Cold Email Guidelines - Two Modes Based on Research
 
-Use **Mode A** if you found a specific relevant job posting. Use **Mode B** if no posting was found.
+**First, check the contact's title:**
+- Individual contributor (Engineer, Senior Engineer, AI/ML Engineer, Data Scientist, Researcher, etc.) → **always Mode B**, even if a job posting exists. ICs can't hire you — write peer-to-peer.
+- Decision-maker (Engineering Manager, VP Eng, CTO, Director, Head of, Recruiter, etc.) → use **Mode A** if a relevant job posting was found, otherwise **Mode B**.
 
 ---
 

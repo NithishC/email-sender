@@ -42,6 +42,12 @@ ${this.senderInfo.background}
 
 **CRITICAL**: Only use achievements and metrics listed above. These are real, verifiable accomplishments. Do NOT invent or exaggerate metrics.
 
+**Which achievement to pick based on contact's role:**
+- AI / ML Engineer, AI Researcher, Data Scientist → emphasize LLM orchestration, RAG pipelines, multi-LLM system, NLP work
+- Fullstack / Frontend / Backend Engineer → emphasize React modernization (50% load time), Flask microservices ($4M loans), Redis caching, API optimization
+- Platform / Infrastructure / SRE / DevOps → emphasize ECS Fargate distributed system (65% runtime reduction), CI/CD, retry queue with DLQ
+- CTO / VP Eng / Engineering Manager → emphasize the most business-impactful metric (cost cut $25→$15, 90% faster document generation, or 65% runtime reduction)
+
 ## Target Contact
 - Name: ${contact.name}
 ${contact.company_name ? `- Company: ${contact.company_name}` : ''}
@@ -172,6 +178,12 @@ Provide your response in EXACTLY this format:
 ${this.senderInfo.background}
 
 **CRITICAL**: Only use achievements listed above. Do NOT invent or exaggerate metrics.
+
+**Which achievement to pick based on each contact's role:**
+- AI / ML Engineer, AI Researcher, Data Scientist → emphasize LLM orchestration, RAG pipelines, multi-LLM system, NLP work
+- Fullstack / Frontend / Backend Engineer → emphasize React modernization (50% load time), Flask microservices ($4M loans), Redis caching, API optimization
+- Platform / Infrastructure / SRE / DevOps → emphasize ECS Fargate distributed system (65% runtime reduction), CI/CD, retry queue with DLQ
+- CTO / VP Eng / Engineering Manager → emphasize the most business-impactful metric (cost cut $25→$15, 90% faster document generation, or 65% runtime reduction)
 
 ## Contacts at ${company}
 ${contactList}

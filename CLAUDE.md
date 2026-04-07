@@ -124,3 +124,71 @@ Key style points:
 - **OAuth flow**: Uses localhost redirect (`http://localhost:3000/oauth2callback`) — OOB flow (`urn:ietf:wg:oauth:2.0:oob`) is fully deprecated by Google since Jan 2023.
 - **Gmail limits**: 500/day for personal accounts - stay well under
 - **Follow-up timing**: Intervals are 3, 7, 10 days from initial send
+- **`pending` status does NOT trigger sends** — initial emails only send when there is NO tracking record. If a contact has a `pending` record (e.g. from a failed run), delete it so the send runner picks it up.
+- **Batch generation**: Contacts are grouped by company — one Claude CLI call per company, not per contact. Much faster for multiple contacts at the same company.
+- **Generation output cleanup**: After generation, check for `**` and trailing `---` artifacts with the node cleanup script. These can leak from Claude's markdown formatting.
+
+## Common Maintenance Actions
+
+### Stop follow-ups for a contact (replied/unsubscribed)
+```bash
+# Set status to completed so no more follow-ups are sent
+node -e "
+require('dotenv').config();
+const { createClient } = require('@supabase/supabase-js');
+const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
+supabase.from('email_tracking').update({ status: 'completed', next_follow_up_date: null }).eq('email', 'contact@example.com').then(console.log);
+"
+```
+
+### Fix failed send run (OAuth expired)
+```bash
+# 1. Refresh the token
+npx ts-node scripts/auth-setup.ts
+
+# 2. Delete error/pending tracking records so initial emails resend
+node -e "
+require('dotenv').config();
+const { createClient } = require('@supabase/supabase-js');
+const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
+supabase.from('email_tracking').delete().in('status', ['error', 'pending']).select('email').then(({data}) => console.log('Deleted:', data.map(r=>r.email)));
+"
+
+# 3. Trigger the workflow
+gh workflow run send-campaign.yml
+```
+
+### Check and clean email artifacts (** and ---)
+```bash
+node -e "
+require('dotenv').config();
+const { createClient } = require('@supabase/supabase-js');
+const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
+const fields = ['initial_email_subject','initial_email','follow_up_1_subject','follow_up_1','follow_up_2_subject','follow_up_2','follow_up_3_subject','follow_up_3'];
+function clean(s) { return s ? s.replace(/\*\*/g, '').replace(/\n*---+\s*$/g, '').trim() : s; }
+async function main() {
+  const { data } = await supabase.from('contacts').select('email,' + fields.join(',')).eq('is_emails_enriched', true);
+  for (const row of data) {
+    const update = {};
+    fields.forEach(k => { const c = clean(row[k]); if (c !== row[k]) update[k] = c; });
+    if (Object.keys(update).length) {
+      await supabase.from('contacts').update(update).eq('email', row.email);
+      console.log('Fixed:', row.email);
+    }
+  }
+  console.log('Done.');
+}
+main();
+"
+```
+
+### Trigger GitHub Actions workflow manually
+```bash
+gh workflow run send-campaign.yml
+
+# Check recent runs
+gh run list --workflow=send-campaign.yml --limit=5
+
+# View logs of a failed run
+gh run view <run-id> --log-failed
+```
