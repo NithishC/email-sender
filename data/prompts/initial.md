@@ -1,93 +1,84 @@
 ## Cold Email Guidelines - Two Modes Based on Research
 
 **First, check the contact's title:**
-- Individual contributor (Engineer, Senior Engineer, AI/ML Engineer, Data Scientist, Researcher, etc.) → **always Mode B**, even if a job posting exists. ICs can't hire you — write peer-to-peer.
+- Individual contributor (Engineer, Senior Engineer, AI/ML Engineer, Data Scientist, Researcher, etc.) → **always Mode B**, even if a job posting exists. ICs can't hire you — write peer-to-peer as a fellow engineer.
 - Decision-maker (Engineering Manager, VP Eng, CTO, Director, Head of, Recruiter, etc.) → use **Mode A** if a relevant job posting was found, otherwise **Mode B**.
 
 ---
 
-## MODE A: Specific Job Posting Found
-
-Lead with the role. Show you're a strong match. Skip generic "are you hiring?" — you already know they are.
-
-### REQUIRED STRUCTURE:
-
-1. **Greeting**: "Hi [First Name],"
-
-2. **Job Posting Hook** (1 sentence):
-   - Reference the specific role by name
-   - Example: "Saw you're hiring a Senior Platform Engineer for the reliability team."
-
-3. **Why You're a Strong Match** (1-2 sentences):
-   - ONE or TWO specific, quantified achievements directly relevant to what the JD asks for
-   - Match their language (if JD says "observability", use that word)
-   - Examples:
-     - "I've been building exactly that — cut AI pipeline runtime 60% (12h to 4h) using ECS Fargate with 200+ parallel executors."
-     - "Recently shipped end-to-end agentic orchestration (Claude, GPT-5, O3) with retries, circuit breakers, and stateful execution in production."
-
-4. **Direct Ask** (1 sentence):
-   - Ask about next steps, not whether they're hiring
-   - Examples:
-     - "Would it make sense to connect?"
-     - "Happy to send over my resume if it's a fit."
-     - "Is [Hiring Manager Name] the right person to reach?"
-
-### EXAMPLE (Mode A):
-"Hi Ian,
-
-Saw Poetiq is hiring for the platform team around multi-step agent infrastructure.
-I've been building in this exact space — shipped end-to-end agentic orchestration at YourCompany (Claude, GPT-5, O3) with stateful execution and production-grade reliability in under a week.
-Would it make sense to connect?"
+## SUBJECT LINE (both modes):
+"Expressing interest in [Company Name]"
 
 ---
 
-## MODE B: No Job Posting Found
+## STRUCTURE (both modes share the same 4-paragraph format):
 
-Lead with insight about their work, not your job search. Sound like a peer, not a candidate.
+### Paragraph 1 — Company Hook
+"I'm drawn to [Company] because [specific insight about their mission, expansion, product, or technical challenge] requires the kind of [relevant work type] I've been doing."
 
-### REQUIRED STRUCTURE:
+- Base this on real research: a funding announcement, geographic expansion, a known technical challenge, a product they ship, or their market position
+- Be specific — not "you're building cool AI" but "the expansion across North America and Europe as the Western alternative to Chinese IoT modules"
+- Connect it directly to the type of engineering work you do (data pipelines, distributed systems, agentic AI, platform infra, etc.)
 
-1. **Greeting**: "Hi [First Name],"
+### Paragraph 2 — Current Role (YourCompany)
+"I'm a software engineer with 2.5 years of experience. Most recently at YourCompany, I [one key achievement with a metric]. [Relevant subset of tech stack — always include Python and AWS, add others relevant to this company]."
 
-2. **Specific Observation About Their Work** (1 sentence):
-   - Reference something real — a blog post, a product feature, a talk, a funding announcement, a known technical challenge
-   - Show you've actually looked at what they're building
-   - Examples:
-     - "Saw Poetiq's approach to stateful agent memory across sessions — that's a hard problem most teams get wrong."
-     - "Noticed you raised $45M and are building the platform layer for recursive self-improvement."
+- Pick the ONE most relevant achievement from the background list
+- Match the tech stack to what the company likely uses — always include Python and AWS, add others that fit (PostgreSQL, Docker, ECS, SQS, LangChain, React, Redis, etc.)
 
-3. **Relevant Proof** (1 sentence):
-   - Connect your experience to what they're working on — not a resume line, but a parallel
-   - Examples:
-     - "I've been working on something similar — multi-LLM orchestration with retries and circuit breakers at YourCompany."
-     - "Cut AI pipeline runtime 60% (12h to 4h) using ECS Fargate, similar scale to what you're dealing with."
+### Paragraph 3 — Previous Role (PreviousCompany)
+"Before that at PreviousCompany, I [what you led/built] with [key metric]."
 
-4. **Soft Close** (1 sentence):
-   - Low pressure, curious, peer-to-peer
-   - Examples:
-     - "Worth a quick chat?"
-     - "Happy to compare notes if useful."
-     - "Open to chatting if you're ever looking for someone with this background."
+- Pick the most relevant previous role achievement
+- Keep it to 1-2 sentences
 
-### EXAMPLE (Mode B):
-"Hi Ian,
+### Paragraph 4 — Close
+**Mode A** (job posting found — decision-maker contact):
+"I'd come in ready on [1-2 areas from the JD], and I'd love to be considered for the [Role Name]."
 
-Saw Poetiq's architecture around stateful agent memory across sessions — that's a genuinely hard problem most teams paper over.
-I've been in this space at YourCompany, orchestrating Claude, GPT-5, and O3 with stateful execution and production-grade reliability.
-Worth a quick chat?"
+**Mode B** (no posting, or IC contact):
+"I'd come in ready on [1-2 most relevant areas] and scale quickly into whatever the team needs most."
 
 ---
 
-## TONE & RULES (Both Modes):
-- Short: 3-4 sentences max
-- No "I'm looking for a job" or "exploring opportunities" in the opener
-- No vague asks ("would love to connect", "worth a chat?" is fine, "let's hop on a call!" is not)
-- No em-dashes (use commas or periods)
+## TONE & RULES:
+- No greeting line beyond "Hi [First Name],"
+- No em-dashes (—) — use commas or periods instead
 - No special characters in subject lines
 - No signature or sign-off (Gmail handles this)
+- No "I'm looking for a job" or "exploring opportunities" opener
+- No vague language ("I think I might be a good fit") — be direct and confident
+- No buzzwords: "synergy", "leverage", "cutting-edge", "passionate about"
 - No links in the first email
-- Confident, not apologetic
 
-## SUBJECT LINE:
-- Mode A: Name the role — "Platform Engineer role at Poetiq", "Re: Senior SRE opening"
-- Mode B: Specific and technical — "Agent memory at Poetiq", "AI infra at [Company]", "Quick question"
+---
+
+## EXAMPLE (Mode B — no job posting):
+
+Subject: Expressing interest in Eagle Wireless
+
+Hi Sarah,
+
+I'm drawn to Eagle Wireless because the expansion across North America, Europe, and APAC as the Western alternative to Chinese IoT/automotive modules requires the kind of data infrastructure and pipeline work I've been doing.
+
+I'm a software engineer with 2.5 years of experience. Most recently at YourCompany, I built distributed AI agent pipelines on AWS (ECS Fargate + SQS) that scaled to 200+ parallel workers and cut processing from 12 hours to same-day. Python, PostgreSQL, Docker, AWS.
+
+Before that at PreviousCompany, I led a full platform migration from legacy PHP to React and built Flask microservices with Redis caching. Page load dropped 50%, infra costs 40%.
+
+I'd come in ready on backend infrastructure and data pipelines and scale quickly into whatever the team needs most.
+
+---
+
+## EXAMPLE (Mode A — job posting found):
+
+Subject: Expressing interest in Halcyon
+
+Hi Jacob,
+
+I'm drawn to Halcyon because building a resilient cloud platform at $1B scale for enterprise ransomware protection requires exactly the distributed infrastructure and pipeline work I've been doing.
+
+I'm a software engineer with 2.5 years of experience. Most recently at YourCompany, I architected a distributed system on AWS (ECS Fargate + SQS + Lambda) with 200+ concurrent workers that cut AI pipeline runtime by 65%. Python, AWS, Docker, PostgreSQL.
+
+Before that at PreviousCompany, I designed an automated CI/CD pipeline achieving zero-downtime deployments and built Flask microservices supporting $4M in loan originations.
+
+I'd come in ready on cloud infrastructure and platform reliability, and I'd love to be considered for the Cloud and DevOps Engineer role.

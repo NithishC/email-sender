@@ -90,16 +90,13 @@ Each follow-up should:
 - Follow-up 3 should gracefully close the loop
 
 ## Important Style Notes - THIS IS CRITICAL
-- Write like a quick Slack message, NOT a formal email
 - NEVER use em-dashes (—). Use commas or periods instead.
-- Be direct: "I'll keep this brief" not "I hope this email finds you well"
-- Be confident: "My background is a perfect fit" not "I think I might be relevant"
-- Can use casual emoji like :) at the end
+- Be direct and confident — no hedging ("I think I might be relevant" → "My background fits directly")
 - NO signature or sign-off at all (Gmail signature is pre-configured and will be added automatically)
 - NO "Best," "Nithish," "Thanks," etc. - just end with the content
 - NO buzzwords like "synergy," "leverage," or "cutting-edge"
-- NO philosophical statements like "I've been thinking about..."
-- NO passive language like "got curious about" or "came across"
+- NO "I'm looking for a job" or "exploring opportunities" opener
+- NO links in the first email
 
 ## Output Format
 
@@ -216,13 +213,14 @@ ${followupGuidelines}
 Follow-up timing: 3 days / 7 days / 14 days after initial.
 
 ## Style Rules (CRITICAL for ALL emails)
-- Write like a quick Slack message, NOT a formal email
 - NEVER use em-dashes (—). Use commas or periods instead.
 - NO markdown bold (**), NO bullet formatting in email bodies
 - NO signature or sign-off (Gmail adds it automatically)
 - NO "Best," "Thanks," "Nithish," — just end with the content
 - NO buzzwords, NO philosophical statements
-- Short: initial = 3-4 sentences, follow-ups = 2-3 sentences
+- NO "I'm looking for a job" or "exploring opportunities" opener
+- Initial emails: 4 paragraphs per the initial email guidelines above
+- Follow-ups: 2-3 sentences each
 
 ## REQUIRED Output Format
 

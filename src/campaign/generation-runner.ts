@@ -220,7 +220,7 @@ automating campaign document generation 90% faster for clients
 - Identified API rate-limiting constraints through hands-on load testing, benchmarking tokens per call and requests per minute, then proposed and 
 implemented a retry queue with dead-letter queue (DLQ), enabling failure diagnosis and zero-loss recovery for previously unrecoverable jobs
 
-## Previous Role - PreviousCompany (Jun 2022 - Aug 2023)
+## Previous Role - PreviousCompany (Jun 2021 - Aug 2023)
 - Led React modernization reducing page load time from 4.2s to 2.1s (50% improvement) and bounce rate by 35%
 - Spearheaded migration of 1000+ lines of code, achieving 40% reduction in infrastructure costs
 - Created Flask microservices supporting $4M in total loan originations, decreasing document processing latency by 68%
