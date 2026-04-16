@@ -67,6 +67,12 @@ npx ts-node scripts/reset-contact.ts email
 # View generated emails
 npx ts-node scripts/view-emails.ts email
 
+# Stop follow-ups and archive a contact (prospect replied/unsubscribed)
+npx ts-node scripts/stop-and-archive.ts email
+
+# Bulk archive all completed contacts
+npx ts-node scripts/archive-completed.ts
+
 # Refresh Gmail OAuth token (run every ~7 days, auto-updates GitHub secret)
 npx ts-node scripts/auth-setup.ts
 ```
@@ -130,15 +136,15 @@ Key style points:
 
 ## Common Maintenance Actions
 
-### Stop follow-ups for a contact (replied/unsubscribed)
+### Stop follow-ups and archive a contact (replied/unsubscribed)
 ```bash
-# Set status to completed so no more follow-ups are sent
-node -e "
-require('dotenv').config();
-const { createClient } = require('@supabase/supabase-js');
-const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
-supabase.from('email_tracking').update({ status: 'completed', next_follow_up_date: null }).eq('email', 'contact@example.com').then(console.log);
-"
+# Stops follow-ups AND moves contact to archived_contacts in one step
+npx ts-node scripts/stop-and-archive.ts contact@example.com
+```
+
+To archive all completed contacts in bulk:
+```bash
+npx ts-node scripts/archive-completed.ts
 ```
 
 ### Fix failed send run (OAuth expired)

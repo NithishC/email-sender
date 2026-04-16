@@ -103,10 +103,10 @@ async function importContacts(filePath: string) {
     console.log(`  ${i + 1}. ${c.name} (${c.email}) - ${c.title} @ ${c.company_name}`);
   });
 
-  // Upsert contacts (update if exists, insert if not)
+  // Insert new contacts only — skip if email already exists
   const { data, error } = await supabase
     .from('contacts')
-    .upsert(contacts, { onConflict: 'email' })
+    .upsert(contacts, { onConflict: 'email', ignoreDuplicates: true })
     .select('email');
 
   if (error) {

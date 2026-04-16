@@ -4,9 +4,10 @@ This document describes the Supabase PostgreSQL database schema used in the Cold
 
 ## Overview
 
-The project uses Supabase as its database backend with 2 main tables:
+The project uses Supabase as its database backend with 3 tables:
 - `contacts` - Contact information and generated emails (email as PK)
-- `email_tracking` - Status and history of sent emails (FK to contacts)
+- `email_tracking` - Status and history of sent emails
+- `archived_contacts` - Contacts that have been replied, unsubscribed, or completed (same schema as contacts + `archived_at`)
 
 ---
 
@@ -122,6 +123,23 @@ email_tracking.email REFERENCES contacts(email) ON DELETE CASCADE
 
 ---
 
+### 3. `archived_contacts`
+
+Contacts that have replied, unsubscribed, or completed the full sequence. Same schema as `contacts` plus one extra column.
+
+| Column | Type | Nullable | Description |
+|--------|------|----------|-------------|
+| (all columns from `contacts`) | | | Same as contacts table |
+| `archived_at` | TIMESTAMPTZ | No | When the contact was archived |
+
+**How contacts get here:**
+- A prospect replies → run `npx ts-node scripts/stop-and-archive.ts <email>`
+- Bulk archive all completed → run `npx ts-node scripts/archive-completed.ts`
+
+The `email_tracking` record is **preserved** when a contact is archived (FK constraint was intentionally dropped in migration `20260413000001_drop_tracking_fk.sql`).
+
+---
+
 ## Data Flow
 
 ```
@@ -161,10 +179,10 @@ email_tracking.email REFERENCES contacts(email) ON DELETE CASCADE
 ## Design Notes
 
 1. **Email as Primary Key**: contacts.email is the PK - no UUID needed
-2. **Foreign Key Constraint**: email_tracking.email references contacts.email with CASCADE delete
+2. **No FK Constraint**: The FK from email_tracking to contacts was intentionally dropped so tracking records survive when contacts are archived
 3. **Emails in Contacts**: All 4 emails stored directly in contacts table
 4. **is_emails_enriched Flag**: Boolean indicates whether emails have been generated
-5. **No Soft Deletes**: Delete contacts directly when not needed (bounced/unsubscribed tracked via email_tracking.status)
+5. **Archiving over soft-deletes**: Replied/completed contacts are moved to `archived_contacts` (not soft-deleted) — full email history is preserved
 6. **Local Generation**: Claude CLI runs locally, GitHub Actions only sends
 7. **Review in Supabase**: Edit emails directly in contacts table before sending
 
@@ -181,4 +199,10 @@ npm run send:dry-run
 
 # Send emails (usually via GitHub Actions)
 npm run send
+
+# Stop follow-ups and archive a single contact (prospect replied/unsubscribed)
+npx ts-node scripts/stop-and-archive.ts contact@example.com
+
+# Bulk archive all completed contacts
+npx ts-node scripts/archive-completed.ts
 ```
