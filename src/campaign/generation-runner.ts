@@ -1,3 +1,4 @@
+import * as fs from 'fs';
 import * as path from 'path';
 import { loadConfig } from '../config';
 import { getUnenrichedContacts, updateContactEmails } from '../db/contacts';
@@ -192,6 +193,24 @@ export class GenerationRunner {
   }
 }
 
+function loadSenderInfo(projectRoot: string): SenderInfo {
+  const backgroundPath = path.join(projectRoot, 'data', 'prompts', 'sender-background.md');
+  let background = '';
+  if (fs.existsSync(backgroundPath)) {
+    background = fs.readFileSync(backgroundPath, 'utf-8').trim();
+  } else {
+    console.warn('Warning: data/prompts/sender-background.md not found. Background will be empty.');
+  }
+  return {
+    name: process.env.SENDER_NAME || '',
+    email: process.env.SENDER_EMAIL || '',
+    linkedin: process.env.SENDER_LINKEDIN || '',
+    github: process.env.SENDER_GITHUB || '',
+    currentRole: process.env.SENDER_ROLE || '',
+    background,
+  };
+}
+
 // CLI entry point
 export async function main(): Promise<void> {
   console.log('Starting email generation...\n');
@@ -200,40 +219,7 @@ export async function main(): Promise<void> {
   const config = loadConfig(true); // dry-run mode for generation (no Gmail needed)
   const projectRoot = process.cwd();
 
-  // Nithish's background - ALL REAL METRICS from resume
-  const senderInfo: SenderInfo = {
-    name: 'SENDER_NAME',
-    email: 'SENDER_EMAIL',
-    linkedin: 'SENDER_LINKEDIN',
-    github: 'SENDER_GITHUB',
-    currentRole: 'SENDER_ROLE',
-    background: `
-## Current Role - YourCompany (Aug 2025 - Present)
-- Architected distributed parallel system (ECS Fargate + SQS + Lambda) on Linux serving 20+ B2B clients with 200+ concurrent workers, reducing 
-runtime by 65% (12-14 hrs to 4-5 hrs for 1,000+ prospects)
-- Cut per-job LLM inference cost from $25 to $15-20 per 200-prospect batch by diagnosing a prompt-caching misconfiguration and switching to 
-Claude-as-orchestrator + GPT-mini execution model, maintaining output quality
-- Shipped end-to-end AI agentic system orchestrating multi-LLM pipelines (Claude, GPT-5, O3 Deep Research) with production-grade resilience 
-patterns (tool calling, retries, timeouts, circuit breakers), deployed in one week
-- Developed NLP and RAG pipelines processing thousands of meeting transcripts, recordings and web sources into structured business insights, 
-automating campaign document generation 90% faster for clients
-- Identified API rate-limiting constraints through hands-on load testing, benchmarking tokens per call and requests per minute, then proposed and 
-implemented a retry queue with dead-letter queue (DLQ), enabling failure diagnosis and zero-loss recovery for previously unrecoverable jobs
-
-## Previous Role - PreviousCompany (Jun 2021 - Aug 2023)
-- Led React modernization reducing page load time from 4.2s to 2.1s (50% improvement) and bounce rate by 35%
-- Spearheaded migration of 1000+ lines of code, achieving 40% reduction in infrastructure costs
-- Created Flask microservices supporting $4M in total loan originations, decreasing document processing latency by 68%
-- Implemented Redis caching for credit assessment platform, reducing PostgreSQL load by 42%
-- Designed automated CI/CD pipeline achieving zero-downtime deployments and reducing QA cycles by 75%
-- Optimized Spring Boot APIs, improving transaction latency by 35%
-- Reduced system downtime by 30% through effective incident resolution
-
-## Education & Skills
-- MS in Software Engineering from Northeastern University (GPA 3.7)
-- Tech stack: Python, TypeScript, React, Node.js, AWS (ECS, Lambda, SQS, S3, RDS), Docker, Kubernetes, PostgreSQL, Redis, MongoDB, LangChain, RAG, OpenAI API
-    `.trim(),
-  };
+  const senderInfo: SenderInfo = loadSenderInfo(projectRoot);
 
   console.log('Sender Info:');
   console.log(`  Name: ${senderInfo.name}`);

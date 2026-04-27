@@ -15,16 +15,14 @@ interface SendEmailOptions {
   gmailMessageId?: string;  // RFC 2822 Message-ID of previous email for In-Reply-To header
 }
 
-// Hardcoded signatures since Gmail API doesn't support named signatures
-const SIGNATURE_FOLLOWUP = `Best,<br>
-SENDER_NAME<br>
-<a href="SENDER_LINKEDIN">LinkedIn</a>`;
-
-const SIGNATURE_INITIAL = `Best,<br>
-SENDER_NAME<br>
-<a href="SENDER_LINKEDIN">LinkedIn</a><br>
-<br>
-<span style="color: #e67e22; font-size: 0.9em;">P.S. Just so you know, I found your email through Apollo. I like to be pretty transparent about these things, so no need to worry about any data leaks!</span>`;
+function buildSignatures(): { followup: string; initial: string } {
+  const name = process.env.SENDER_NAME || 'Sender';
+  const linkedin = process.env.SENDER_LINKEDIN || '#';
+  return {
+    followup: `Best,<br>\n${name}<br>\n<a href="${linkedin}">LinkedIn</a>`,
+    initial: `Best,<br>\n${name}<br>\n<a href="${linkedin}">LinkedIn</a><br>\n<br>\n<span style="color: #e67e22; font-size: 0.9em;">P.S. Just so you know, I found your email through Apollo. I like to be pretty transparent about these things, so no need to worry about any data leaks!</span>`,
+  };
+}
 
 export class GmailSender {
   private gmail: gmail_v1.Gmail;
@@ -45,8 +43,8 @@ export class GmailSender {
   }
 
   private getSignature(emailType: EmailType): string {
-    // Use initial signature (with P.S.) for initial emails, follow-up signature for others
-    return emailType === 'initial' ? SIGNATURE_INITIAL : SIGNATURE_FOLLOWUP;
+    const sigs = buildSignatures();
+    return emailType === 'initial' ? sigs.initial : sigs.followup;
   }
 
   private async fetchOrCreateLabel(labelName: string): Promise<string | null> {

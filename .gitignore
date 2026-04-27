@@ -34,4 +34,5 @@ tmpclaude-*
 # Data files (now in Supabase)
 data/*.csv
 data/prompts/data.md
+data/prompts/sender-background.md
 temp/

@@ -1,3 +1,5 @@
+import * as fs from 'fs';
+import * as path from 'path';
 import * as dotenv from 'dotenv';
 import { createClient } from '@supabase/supabase-js';
 import { ClaudeCli } from '../src/ai/claude-cli';
@@ -11,20 +13,25 @@ const supabase = createClient(
   process.env.SUPABASE_ANON_KEY!
 );
 
-const SENDER_INFO: SenderInfo = {
-  name: 'SENDER_NAME',
-  email: 'SENDER_EMAIL',
-  linkedin: 'SENDER_LINKEDIN',
-  github: 'SENDER_GITHUB',
-  currentRole: 'SENDER_ROLE',
-  background: `
-- Building AI-powered character animation tools at YourCompany
-- Previously worked on distributed systems and real-time data pipelines
-- Experience with Python, TypeScript, React, and cloud infrastructure (AWS/GCP)
-- Interested in ML/AI applications, especially in creative tools
-- Built side projects involving LLMs and automation
-`.trim(),
-};
+function loadSenderInfo(): SenderInfo {
+  const backgroundPath = path.join(process.cwd(), 'data', 'prompts', 'sender-background.md');
+  let background = '';
+  if (fs.existsSync(backgroundPath)) {
+    background = fs.readFileSync(backgroundPath, 'utf-8').trim();
+  } else {
+    console.warn('Warning: data/prompts/sender-background.md not found. Background will be empty.');
+  }
+  return {
+    name: process.env.SENDER_NAME || '',
+    email: process.env.SENDER_EMAIL || '',
+    linkedin: process.env.SENDER_LINKEDIN || '',
+    github: process.env.SENDER_GITHUB || '',
+    currentRole: process.env.SENDER_ROLE || '',
+    background,
+  };
+}
+
+const SENDER_INFO: SenderInfo = loadSenderInfo();
 
 async function main() {
   const email = process.argv[2];
